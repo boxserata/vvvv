@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERSHIELD | نسل نوین شبکه امن و اینترنت آزاد</title>
+    <!-- Local Fonts Fallback -->
+    
+    
+    <style>
+        :root {
+            --bg-void: #030712;
+            --bg-surface: rgba(10, 16, 30, 0.78);
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-glass: rgba(15, 23, 42, 0.45);
+            --border-cyan: rgba(0, 242, 254, 0.3);
+            --border-purple: rgba(168, 85, 247, 0.35);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --cyan: #00f2fe;
+            --cyan-glow: rgba(0, 242, 254, 0.4);
+            --purple: #a855f7;
+            --purple-glow: rgba(168, 85, 247, 0.4);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.35);
+            --amber: #f59e0b;
+            --rose: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dark: #64748b;
+            --font-fa: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-fa);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Scanline Overlay (Sci-Fi Aesthetic) */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.6;
+        }
+
+        /* Ambient Cyber Grid & Glow Orbs */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.06) 0%, transparent 70%),
+                linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 48px 48px, 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+            transition: all 0.5s ease;
+        }
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -100px;
+            background: radial-gradient(circle, var(--cyan) 0%, rgba(0,0,0,0) 70%);
+        }
+        .orb-2 {
+            width: 700px;
+            height: 700px;
+            bottom: -200px;
+            left: -150px;
+            background: radial-gradient(circle, var(--purple) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        /* Containers */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header / Navbar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(3, 7, 18, 0.82);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 0;
+            transition: border-color 0.3s;
+        }
+        header:hover {
+            border-bottom-color: rgba(0, 242, 254, 0.2);
+        }
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #00f2fe, #7928ca);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #030712;
+            font-size: 22px;
+            box-shadow: 0 0 24px var(--cyan-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(30deg);
+            animation: shine 4s infinite;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20% { transform: translateX(100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+        .brand-name {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #ffffff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .network-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            font-size: 11px;
+            color: var(--emerald);
+            font-weight: 600;
+        }
+        .radar-ping {
+            width: 8px;
+            height: 8px;
+            background: var(--emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--emerald);
+            animation: pulse-ring 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.9; }
+            50% { transform: scale(1.4); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.9; }
+        }
+
+        .nav-tools {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .audio-toggle-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+        .audio-toggle-btn:hover {
+            color: var(--cyan);
+            border-color: var(--border-cyan);
+        }
+        .audio-toggle-btn.active {
+            color: var(--cyan);
+            background: rgba(0, 242, 254, 0.1);
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-cyan {
+            background: linear-gradient(135deg, var(--cyan), #0284c7);
+            color: #030712;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+        }
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+        }
+        .btn-purple {
+            background: linear-gradient(135deg, var(--purple), #7c3aed);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.35);
+        }
+        .btn-purple:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.6);
+        }
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+        }
+        .btn-ghost:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: var(--border-cyan);
+            color: var(--cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 70px 0 50px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 40px;
+            min-height: 600px;
+        }
+        .hero-badge-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 242, 254, 0.06);
+            border: 1px solid var(--border-cyan);
+            border-radius: 999px;
+            padding: 6px 18px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--cyan);
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 22px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-desc {
+            font-size: 17px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            line-height: 1.85;
+            max-width: 540px;
+        }
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 28px;
+        }
+        .metric-card h4 {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--cyan);
+        }
+        .metric-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* 3D Canvas Box */
+        .hero-canvas-box {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #webgl-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            cursor: grab;
+            filter: drop-shadow(0 0 40px rgba(0, 242, 254, 0.2));
+        }
+        .hud-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-cyan);
+            border-radius: 14px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            pointer-events: none;
+        }
+        .hud-fps {
+            font-family: var(--font-mono);
+            color: var(--emerald);
+            font-weight: 700;
+        }
+
+        /* Global Ping Latency Monitor */
+        .ping-matrix-sec {
+            margin: 40px 0 80px;
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .ping-matrix-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 16px;
+        }
+        .ping-matrix-head h3 {
+            font-size: 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+        }
+        .server-chip {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+        .server-chip:hover {
+            border-color: var(--border-cyan);
+            background: rgba(0, 242, 254, 0.03);
+            transform: translateY(-2px);
+        }
+        .server-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .server-flag {
+            font-size: 24px;
+        }
+        .server-title {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .server-protocol {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+        .ping-pill {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--emerald);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        /* 3D Tilt Pricing Cards */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-tag {
+            color: var(--cyan);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 14px;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+
+        .pricing-deck {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin-bottom: 90px;
+            perspective: 1000px;
+        }
+        .pricing-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 26px;
+            padding: 36px 28px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .pricing-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 25px 60px rgba(0, 242, 254, 0.15);
+        }
+        .pricing-card.vip-tier {
+            border-color: var(--purple);
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.12) 0%, rgba(10, 16, 30, 0.9) 100%);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.18);
+        }
+        .badge-featured {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--purple), #ec4899);
+            color: #fff;
+            padding: 5px 18px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 0 20px var(--purple-glow);
+        }
+        .card-plan-name {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .card-plan-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            min-height: 42px;
+        }
+        .card-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 22px;
+        }
+        .card-price-num {
+            font-family: var(--font-fa);
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+        }
+        .card-price-unit {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .features-list {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+        .features-list li {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feat-bullet {
+            color: var(--emerald);
+            font-weight: 900;
+            font-size: 16px;
+        }
+
+        /* Supported Protocols & Client Apps */
+        .protocols-sec {
+            margin-bottom: 90px;
+            text-align: center;
+        }
+        .proto-badge-deck {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 26px;
+        }
+        .proto-pill {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+        .proto-pill:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(0, 242, 254, 0.04);
+        }
+
+        /* MODALS ARCHITECTURE */
+        .modal-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 6, 17, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .modal-dialog {
+            background: #0b1120;
+            border: 1px solid var(--border-cyan);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 720px;
+            padding: 38px;
+            position: relative;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 242, 254, 0.15);
+            max-height: 92vh;
+            overflow-y: auto;
+            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.92) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .modal-dialog.large {
+            max-width: 1000px;
+        }
+        .modal-exit-btn {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        .modal-exit-btn:hover {
+            background: var(--rose);
+            border-color: var(--rose);
+            transform: rotate(90deg);
+        }
+        .modal-heading {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .text-input, .text-area, .select-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 13px 18px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .text-input:focus, .text-area:focus, .select-input:focus {
+            border-color: var(--cyan);
+            background: rgba(0, 242, 254, 0.02);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+        .text-area {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* 3D Holographic Bank Card */
+        .hologram-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 60%, #022c22 100%);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 26px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 242, 254, 0.1);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease-out;
+            cursor: pointer;
+        }
+        .hologram-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .card-chip {
+            width: 48px;
+            height: 36px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .card-digits-row {
+            font-family: var(--font-mono);
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 3.5px;
+            color: #fff;
+            margin-bottom: 16px;
+            direction: ltr;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-details-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .copy-chip-btn {
+            font-size: 12px;
+            padding: 5px 12px;
+            background: rgba(0, 242, 254, 0.15);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-fa);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .copy-chip-btn:hover {
+            background: var(--cyan);
+            color: #030712;
+        }
+
+        /* User Panel Hub */
+        .tab-bar {
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 26px;
+            padding-bottom: 12px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 9px 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: var(--cyan);
+            background: rgba(0, 242, 254, 0.1);
+        }
+        .service-inventory-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+        }
+        .service-inventory-card:hover {
+            border-color: rgba(0, 242, 254, 0.25);
+        }
+        .config-terminal {
+            background: #030712;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--cyan);
+            direction: ltr;
+            text-align: left;
+            word-break: break-all;
+            margin-top: 12px;
+            max-height: 95px;
+            overflow-y: auto;
+        }
+        .progress-track {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 14px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--purple));
+            border-radius: 10px;
+            width: 45%;
+        }
+
+        /* Chat & Messenger Engine */
+        .messenger-box {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            background: #030712;
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        .chat-stream {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .chat-bubble {
+            max-width: 78%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+        .chat-bubble.admin-role {
+            align-self: flex-start;
+            background: rgba(168, 85, 247, 0.18);
+            border: 1px solid var(--border-purple);
+            color: #f3e8ff;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-bubble.user-role {
+            align-self: flex-end;
+            background: rgba(0, 242, 254, 0.15);
+            border: 1px solid var(--border-cyan);
+            color: #ecfeff;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-timestamp {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 6px;
+            display: block;
+        }
+        .chat-bar {
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Admin Table & Badges */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-top: 16px;
+        }
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            text-align: right;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-badge.approved { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
+        .status-badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
+
+        /* Notification Toast */
+        .hud-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0b1120;
+            border: 1px solid var(--cyan);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            color: #fff;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: toastSlide 0.3s ease;
+        }
+        @keyframes toastSlide {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* QR Code Modal Display */
+        #qr-canvas-holder {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 44px 0;
+            margin-top: 80px;
+            background: #02050e;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .stealth-admin-trigger {
+            opacity: 0.35;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-mono);
+        }
+        .stealth-admin-trigger:hover {
+            opacity: 1;
+            color: var(--cyan);
+        }
+
+        @media (max-width: 960px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 30px;
+            }
+            .hero-desc {
+                margin: 0 auto 30px;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .hero-metrics {
+                justify-content: center;
+            }
+            .hero-canvas-box {
+                height: 380px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cyber Matrix Effects -->
+    <div class="scanlines"></div>
+    <div class="cyber-grid"></div>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrap">
+            <a href="#" class="brand-box" onclick="location.hash=''; return false;">
+                <div class="brand-icon">🛡️</div>
+                <div>
+                    <div class="brand-name" id="site-logo-text">CYBERSHIELD NET</div>
+                    <div class="network-badge"><span class="radar-ping"></span> سرورها آنلاین و آماده اتصال</div>
+                </div>
+            </a>
+            <div class="nav-tools">
+                <button class="audio-toggle-btn active" id="audio-toggle-btn" onclick="toggleAudio()" title="افکت صوتی سایبری">
+                    🔊
+                </button>
+                <button class="btn btn-ghost" onclick="openUserDashboard()">
+                    <span>👤</span> پنل کاربری
+                </button>
+                <a href="#plans" class="btn btn-cyan">
+                    <span>⚡</span> خرید سرویس
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-left">
+                <div class="hero-badge-wrap">
+                    <span>🚀</span> <span id="hero-tag-text">پروتکل نسل جدید VLESS Reality + Hysteria2</span>
+                </div>
+                <h1 class="hero-title" id="hero-title-text">اینترنت آزاد و پرسرعت، بدون قطعی با پینگ گیمینگ</h1>
+                <p class="hero-desc" id="hero-desc-text">
+                    دسترسی بدون فیلتر به اینستاگرام، یوتیوب، تلگرام، وب‌سایت‌های خارجی و تریدینگ. با سرورهای اختصاصی در ۵ کشور و اتصال تضمینی روی تمامی اپراتورهای ایرانسل، همراه اول، رایتل و مخابرات.
+                </p>
+                <div class="hero-cta">
+                    <a href="#plans" class="btn btn-cyan" style="padding: 15px 36px; font-size: 16px;">
+                        مشاهده پلن‌ها و خرید آنی
+                    </a>
+                    <button class="btn btn-ghost" onclick="grantInstantTestAccount()">
+                        تست رایگان ۱ روزه
+                    </button>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <h4 id="metric-users">+۱۸,۴۰۰</h4>
+                        <p>کاربر فعال ماهانه</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>۹۹.۹۸٪</h4>
+                        <p>پایداری شبکه (Uptime)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>< ۳۲ms</h4>
+                        <p>میانگین پینگ سرورها</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-canvas-box">
+                <!-- 3D Interactive WebGL Matrix Canvas -->
+                <canvas id="webgl-canvas"></canvas>
+                <div class="hud-overlay">
+                    <span class="radar-ping"></span>
+                    <span>هسته شبیه‌سازی ۳D شبکه کوانتومی</span>
+                    <span class="hud-fps" id="fps-counter">60 FPS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Server Latency Matrix -->
+        <section class="ping-matrix-sec">
+            <div class="ping-matrix-head">
+                <h3><span>📡</span> پایش لحظه‌ای و سنجش پینگ سرورهای بین‌المللی</h3>
+                <span style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);" id="ping-refresh-time">SYNC: LIVE</span>
+            </div>
+            <div class="ping-grid">
+                <div class="server-chip">
+                    <div class="server-meta">
+                        <span class="server-flag">🇩🇪</span>
+                        <div>
+                            <div class="server-title">فرانکفورت (آلمان)</div>
+                            <div class="server-protocol">VLESS Reality / UDP</div>
+                        </div>
+                    </div>
+                    <div class="ping-pill" id="ping-de">27 ms</div>
+                </div>
+                <div class="server-chip">
+                    <div class="server-meta">
+                        <span class="server-flag">🇳🇱</span>
+                        <div>
+                            <div class="server-title">آمستردام (هلند)</div>
+                            <div class="server-protocol">Hysteria2 / High-Bandwidth</div>
+                        </div>
+                    </div>
+                    <div class="ping-pill" id="ping-nl">32 ms</div>
+                </div>
+                <div class="server-chip">
+                    <div class="server-meta">
+                        <span class="server-flag">🇫🇮</span>
+                        <div>
+                            <div class="server-title">هلسینکی (فنلاند)</div>
+                            <div class="server-protocol">TUIC v5 / Anti-Drop</div>
+                        </div>
+                    </div>
+                    <div class="ping-pill" id="ping-fi">38 ms</div>
+                </div>
+                <div class="server-chip">
+                    <div class="server-meta">
+                        <span class="server-flag">🇹🇷</span>
+                        <div>
+                            <div class="server-title">استانبول (ترکیه)</div>
+                            <div class="server-protocol">Trojan / Low Latency</div>
+                        </div>
+                    </div>
+                    <div class="ping-pill" id="ping-tr">19 ms</div>
+                </div>
+                <div class="server-chip">
+                    <div class="server-meta">
+                        <span class="server-flag">🇸🇬</span>
+                        <div>
+                            <div class="server-title">سنگاپور (VIP)</div>
+                            <div class="server-protocol">Shadowsocks 2022</div>
+                        </div>
+                    </div>
+                    <div class="ping-pill" id="ping-sg">54 ms</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plans & Pricing Section -->
+        <section id="plans" style="padding-top: 30px;">
+            <div class="section-header">
+                <div class="section-tag">تعرفه‌های اشتراک اختصاصی</div>
+                <h2 class="section-title">پلن مناسب استفاده خود را انتخاب کنید</h2>
+                <p class="section-subtitle">همه پلن‌ها دارای آی‌پی تمیز و اختصاصی، سرعت بدون محدودیت و پشتیبانی ویژه هستند.</p>
+            </div>
+
+            <div class="pricing-deck" id="pricing-deck-holder">
+                <!-- Injected via JavaScript from State -->
+            </div>
+        </section>
+
+        <!-- Protocols & Clients Showcase -->
+        <section class="protocols-sec">
+            <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">نرم‌افزارها و سیستم‌عامل‌های پشتیبانی‌شده</h3>
+            <p style="font-size: 14px; color: var(--text-muted);">اتصال روان روی تمامی پلتفرم‌ها با تمامی برنامه‌های مطرح جهان</p>
+            <div class="proto-badge-deck">
+                <div class="proto-pill"><span>🤖</span> اندروید (v2rayNG / Hiddify)</div>
+                <div class="proto-pill"><span>🍏</span> آیفون و آیپد (Streisand / V2Box / FoXray)</div>
+                <div class="proto-pill"><span>💻</span> ویندوز (Nekoray / v2rayN / Clash Verge)</div>
+                <div class="proto-pill"><span>🖥️</span> مک‌بوک (Streisand / Clash)</div>
+                <div class="proto-pill"><span>🐧</span> لینوکس اوبونتو و دبیان</div>
+                <div class="proto-pill"><span>🛡️</span> VLESS Reality</div>
+                <div class="proto-pill"><span>⚡</span> Hysteria 2 UDP</div>
+                <div class="proto-pill"><span>🔒</span> Trojan-GFW</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                <div style="font-weight: 800; color: #fff; margin-bottom: 6px;">شبکه امن سایبرشیلد پرو (CYBERSHIELD)</div>
+                <p>طراحی شده جهت استقرار ۱۰۰٪ روی مخازن گیت‌هاب پیجز (GitHub Pages).</p>
+            </div>
+            <div>
+                <!-- Stealth Admin Shortcut -->
+                <span class="stealth-admin-trigger" onclick="openAdminTerminal()" title="پنل مدیریت">
+                    [SECURE_ADMIN_TERMINAL_v2.4]
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- 1. CHECKOUT MODAL (کارت به کارت با کارت سه‌بعدی) -->
+    <div class="modal-wrap" id="modal-checkout">
+        <div class="modal-dialog">
+            <button class="modal-exit-btn" onclick="closeModal('modal-checkout')">✕</button>
+            <div class="modal-heading">
+                <span>💳</span> پرداخت و فعال‌سازی اشتراک
+            </div>
+
+            <div id="checkout-summary-box" style="margin-bottom: 22px; padding: 16px; background: rgba(0,242,254,0.06); border-radius: 14px; border: 1px solid var(--border-cyan);">
+                <div style="display:flex; justify-content:space-between; font-weight:800;">
+                    <span id="co-plan-name-display">پلن انتخابی</span>
+                    <span id="co-plan-price-display" style="color:var(--cyan); font-size:16px;">۰۰۰ تومان</span>
+                </div>
+            </div>
+
+            <!-- 3D Holographic Interactive Bank Card -->
+            <div class="hologram-card" id="hologram-card" onmousemove="tiltCard(event)" onmouseleave="resetCardTilt()" onclick="copyCardNumberToClipboard()">
+                <div class="card-chip"></div>
+                <div class="card-digits-row">
+                    <span id="card-digits-display">6037-9975-1234-5678</span>
+                    <span class="copy-chip-btn">کپی شماره کارت</span>
+                </div>
+                <div class="card-details-row">
+                    <div>
+                        <span>صاحب حساب: </span>
+                        <strong id="card-owner-display" style="color:#fff;">علیرضا رضایی</strong>
+                    </div>
+                    <div>
+                        <span>بانک: </span>
+                        <strong id="card-bank-display" style="color:#fff;">بانک ملی ایران</strong>
+                    </div>
+                </div>
+            </div>
+
+            <form id="checkout-form" onsubmit="handlePaymentSubmit(event)">
+                <div class="input-group">
+                    <label class="input-label">نام کاربری دلخواه (جهت ثبت در پنل و تحویل کانفیگ)</label>
+                    <input type="text" id="co-user-field" class="text-input" placeholder="مثال: amir_vpn" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">شماره همراه یا آیدی تلگرام (جهت پیگیری و ارسال)</label>
+                    <input type="text" id="co-contact-field" class="text-input" placeholder="0912... یا @TelegramID" required>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                    <div class="input-group">
+                        <label class="input-label">۴ رقم آخر کارت واریزکننده</label>
+                        <input type="text" id="co-card-digits-field" class="text-input" placeholder="مثال: ۴۴۸۱" maxlength="4" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">کد پیگیری فیش بانکی (شماره ارجاع)</label>
+                        <input type="text" id="co-tracking-field" class="text-input" placeholder="مثال: ۸۹۲۳۷۴۸۱" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">توضیحات اختیاری (سیستم‌عامل یا لوکیشن درخواستی)</label>
+                    <textarea id="co-notes-field" class="text-area" placeholder="اگر درخواست خاصی دارید یادداشت بفرمایید..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-cyan" style="width:100%; padding:15px; font-size:16px;">
+                    ثبت رسید و بررسی آنی
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. USER PANEL (داشبورد کاربری و چت زنده) -->
+    <div class="modal-wrap" id="modal-user">
+        <div class="modal-dialog large">
+            <button class="modal-exit-btn" onclick="closeModal('modal-user')">✕</button>
+            <div class="modal-heading">
+                <span>👤</span> داشبورد مشترک سایبرشیلد
+            </div>
+
+            <!-- User Auth Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+                <div>
+                    <span>حساب کاربری فعال: </span>
+                    <strong id="active-user-name" style="color:var(--cyan); font-family:var(--font-mono);">کاربر مهمان</strong>
+                </div>
+                <button class="btn btn-ghost" style="padding:6px 16px; font-size:12px;" onclick="promptSwitchUser()">تغییر کاربر</button>
+            </div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchUserTab('user-tab-services')">سرویس‌های من</button>
+                <button class="tab-btn" onclick="switchUserTab('user-tab-chat')">پیام‌ها و پشتیبانی آنلاین</button>
+                <button class="tab-btn" onclick="switchUserTab('user-tab-help')">آموزش اتصال</button>
+            </div>
+
+            <!-- Tab 1: Services & Configs -->
+            <div id="user-tab-services" class="tab-content-panel">
+                <div id="user-services-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Tab 2: Live Chat with Admin -->
+            <div id="user-tab-chat" class="tab-content-panel" style="display:none;">
+                <div class="messenger-box">
+                    <div class="chat-stream" id="user-chat-stream">
+                        <!-- Messages injected here -->
+                    </div>
+                    <form class="chat-bar" onsubmit="submitUserChatMessage(event)">
+                        <input type="text" id="user-chat-input" class="text-input" placeholder="پیام خود را برای ادمین پشتیبانی بنویسید..." required>
+                        <button type="submit" class="btn btn-cyan" style="padding:0 26px;">ارسال</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab 3: Help / Guides -->
+            <div id="user-tab-help" class="tab-content-panel" style="display:none;">
+                <div style="background:rgba(255,255,255,0.02); padding:24px; border-radius:18px; border:1px solid var(--border-subtle); line-height:2;">
+                    <h4 style="color:#fff; margin-bottom:14px;">مراحل سریع اتصال در گوشی و کامپیوتر:</h4>
+                    <ol style="margin-right:20px; color:var(--text-muted); font-size:14.5px;">
+                        <li>نرم‌افزار رایگان <strong>v2rayNG</strong> (برای اندروید) یا <strong>Streisand</strong> (برای آیفون) را از گوگل‌پلی یا اپ‌استور نصب کنید.</li>
+                        <li>از تب «سرویس‌های من»، روی دکمه <strong>«کپی کانفیگ VLESS»</strong> کلیک کنید.</li>
+                        <li>داخل برنامه، علامت مثبت (+) و سپس <strong>Import from Clipboard</strong> را بزنید.</li>
+                        <li>دکمه اتصال را روشن کنید تا با سرعت فیبر نوری به اینترنت آزاد متصل شوید.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. QR CODE MODAL FOR MOBILE SCANNING -->
+    <div class="modal-wrap" id="modal-qr">
+        <div class="modal-dialog" style="max-width:440px; text-align:center;">
+            <button class="modal-exit-btn" onclick="closeModal('modal-qr')">✕</button>
+            <div class="modal-heading" style="justify-content:center;">
+                <span>📲</span> اسکن QR Code کانفیگ
+            </div>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">دوربین یا بارکدخوان اپلیکیشن خود را مقابل تصویر زیر بگیرید:</p>
+            <div id="qr-canvas-holder">
+                <canvas id="qr-canvas" width="220" height="220" style="border-radius:12px; background:#fff; padding:10px;"></canvas>
+            </div>
+            <button class="btn btn-cyan" style="width:100%; margin-top:14px;" onclick="closeModal('modal-qr')">بستن</button>
+        </div>
+    </div>
+
+    <!-- 4. HIDDEN ADMIN TERMINAL (رمز: admin777) -->
+    <div class="modal-wrap" id="modal-admin">
+        <div class="modal-dialog large" style="border-color: var(--purple);">
+            <button class="modal-exit-btn" onclick="closeModal('modal-admin')">✕</button>
+            <div class="modal-heading" style="color: var(--purple);">
+                <span>🔒</span> ترمینال فوق‌سری مدیریت کل (Admin Vault)
+            </div>
+
+            <!-- Lock Screen -->
+            <div id="admin-passcode-view" style="text-align:center; padding:44px 20px;">
+                <div style="font-size:46px; margin-bottom:16px;">⚡</div>
+                <h3 style="font-size:20px; margin-bottom:8px;">احراز هویت پروتکل مدیریت</h3>
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">جهت دسترسی به دیتابیس، تنظیمات سایت و ارسال کانفیگ رمز عبور را وارد کنید.</p>
+                <div style="max-width:340px; margin:0 auto;">
+                    <input type="password" id="admin-secret-pass" class="text-input" placeholder="رمز عبور پیش‌فرض: admin777" style="text-align:center; letter-spacing:4px; margin-bottom:14px;">
+                    <button class="btn btn-purple" style="width:100%;" onclick="authenticateAdmin()">ورود به ترمینال</button>
+                </div>
+            </div>
+
+            <!-- Unlocked Admin Dashboard -->
+            <div id="admin-dashboard-view" style="display:none;">
+                <div class="tab-bar">
+                    <button class="tab-btn active" onclick="switchAdminTab('ad-tab-cms')">✏️ ویرایشگر زنده سایت (CMS)</button>
+                    <button class="tab-btn" onclick="switchAdminTab('ad-tab-orders')">💰 تراکنش‌ها و سفارشات</button>
+                    <button class="tab-btn" onclick="switchAdminTab('ad-tab-dispatch')">📤 ارسال مستقیم کانفیگ متنی</button>
+                    <button class="tab-btn" onclick="switchAdminTab('ad-tab-messenger')">💬 پاسخ‌گویی به تیکت‌ها</button>
+                </div>
+
+                <!-- Admin Tab 1: Live CMS -->
+                <div id="ad-tab-cms" class="admin-tab-view">
+                    <form onsubmit="handleSaveCMS(event)">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                            <div class="input-group">
+                                <label class="input-label">نام و برند سایت</label>
+                                <input type="text" id="adm-site-name" class="text-input">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">برچسب بالای هیرو</label>
+                                <input type="text" id="adm-hero-tag" class="text-input">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">تیتر اصلی صفحه اول (H1)</label>
+                            <input type="text" id="adm-hero-title" class="text-input">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">توضیحات هیرو</label>
+                            <textarea id="adm-hero-desc" class="text-area"></textarea>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle); padding-top:20px; margin-top:20px;">
+                            <h4 style="color:#fff; margin-bottom:14px;">تنظیمات شماره کارت جهت پرداخت کارت به کارت:</h4>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+                                <div class="input-group">
+                                    <label class="input-label">شماره کارت (۱۶ رقمی)</label>
+                                    <input type="text" id="adm-card-num" class="text-input">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">نام دارنده حساب</label>
+                                    <input type="text" id="adm-card-owner" class="text-input">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">نام بانک</label>
+                                    <input type="text" id="adm-card-bank" class="text-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:12px; margin-top:22px;">
+                            <button type="submit" class="btn btn-purple">ذخیره و اعمال آنی روی سایت</button>
+                            <button type="button" class="btn btn-ghost" onclick="resetDefaultDatabase()">ریست به تنظیمات پیش‌فرض</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Admin Tab 2: Orders -->
+                <div id="ad-tab-orders" class="admin-tab-view" style="display:none;">
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>کاربر</th>
+                                    <th>پلن</th>
+                                    <th>مبلغ</th>
+                                    <th>کد پیگیری</th>
+                                    <th>۴ رقم کارت</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات ادمین</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adm-orders-tbody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admin Tab 3: Dispatch Text Service Configs -->
+                <div id="ad-tab-dispatch" class="admin-tab-view" style="display:none;">
+                    <div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:18px; border:1px solid var(--border-subtle); margin-bottom:26px;">
+                        <h4 style="color:var(--cyan); margin-bottom:14px;">➕ صدور و تحویل کانفیگ متنی فیلترشکن به کاربر:</h4>
+                        <form onsubmit="handleDispatchConfig(event)">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                                <div class="input-group">
+                                    <label class="input-label">نام کاربری مقصد</label>
+                                    <input type="text" id="dsp-username" class="text-input" placeholder="نام کاربری خریدار" required>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">عنوان سرویس</label>
+                                    <input type="text" id="dsp-title" class="text-input" placeholder="مثال: سرور اختصاصی آلمان - ۵۰ گیگابایت" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">کد متنی کانفیگ (vless:// یا vmess:// یا متن سرور)</label>
+                                <textarea id="dsp-code" class="text-area" placeholder="کد کامل کانفیگ را اینجا جای‌گذاری کنید..." style="direction:ltr; font-family:var(--font-mono);" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-cyan">ارسال و نمایش فوری در پنل کاربر</button>
+                        </form>
+                    </div>
+
+                    <h4 style="color:#fff; margin-bottom:14px;">سرویس‌های صادر شده در سیستم:</h4>
+                    <div id="adm-issued-services-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Admin Tab 4: Messages & Tickets -->
+                <div id="ad-tab-messenger" class="admin-tab-view" style="display:none;">
+                    <div style="display:grid; grid-template-columns: 240px 1fr; gap:20px; height:450px;">
+                        <div style="background:#030712; border:1px solid var(--border-subtle); border-radius:16px; overflow-y:auto;" id="adm-chat-user-list">
+                            <!-- Users list -->
+                        </div>
+                        <div class="messenger-box" style="height:100%;">
+                            <div class="chat-stream" id="adm-active-chat-stream">
+                                <div style="text-align:center; color:var(--text-muted); margin-top:40px;">کاربری را انتخاب کنید</div>
+                            </div>
+                            <form class="chat-bar" onsubmit="handleSendAdminReply(event)">
+                                <input type="text" id="adm-reply-text" class="text-input" placeholder="پاسخ ادمین به این کاربر..." required>
+                                <button type="submit" class="btn btn-purple" style="padding:0 24px;">ارسال پاسخ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="hud-toast" class="hud-toast">
+        <span id="toast-ico">⚡</span>
+        <span id="toast-text">پیام سیستم</span>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        /* -------------------------------------------------------------
+           1. PROCEDURAL WEB AUDIO SYNTHESIZER (Sci-Fi Sound FX)
+        ------------------------------------------------------------- */
+        let audioCtx = null;
+        let isAudioEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+        }
+
+        function playSciFiSound(type = 'click') {
+            if (!isAudioEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(1400, now + 0.05);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.setValueAtTime(650, now + 0.08);
+                    osc.frequency.setValueAtTime(880, now + 0.16);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'open') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                }
+            } catch(e) {}
+        }
+
+        function toggleAudio() {
+            isAudioEnabled = !isAudioEnabled;
+            const btn = document.getElementById('audio-toggle-btn');
+            btn.classList.toggle('active', isAudioEnabled);
+            btn.innerText = isAudioEnabled ? '🔊' : '🔇';
+            showToast(isAudioEnabled ? 'افکت‌های صوتی سایبری فعال شد' : 'افکت صوتی غیرفعال شد');
+        }
+
+        /* -------------------------------------------------------------
+           2. STATE MANAGEMENT & LOCAL STORAGE
+        ------------------------------------------------------------- */
+        const DEFAULT_DATABASE = {
+            siteSettings: {
+                siteName: 'CYBERSHIELD NET',
+                heroTag: 'پروتکل نسل جدید VLESS Reality + Hysteria2',
+                heroTitle: 'اینترنت آزاد و پرسرعت، بدون قطعی با پینگ گیمینگ',
+                heroDesc: 'دسترسی بدون فیلتر به اینستاگرام، یوتیوب، تلگرام، وب‌سایت‌های خارجی و تریدینگ. با سرورهای اختصاصی در ۵ کشور و اتصال تضمینی روی تمامی اپراتورهای ایرانسل، همراه اول، رایتل و مخابرات.',
+                cardNum: '6037-9975-1234-5678',
+                cardOwner: 'علیرضا رضایی',
+                cardBank: 'بانک ملی ایران'
+            },
+            plans: [
+                {
+                    id: 'tier-1',
+                    name: 'پلن ۱ ماهه برنزی',
+                    desc: 'مناسب وب‌گردی روزمره، تلگرام و اینستاگرام',
+                    price: '۱۴۰,۰۰۰',
+                    features: ['۳۵ گیگابایت ترافیک بین‌الملل', 'اتصال ۲ کاربر همزمان', 'لوکیشن آلمان و هلند', 'پشتیبانی تیکتی'],
+                    vip: false
+                },
+                {
+                    id: 'tier-2',
+                    name: 'پلن ۳ ماهه نقره‌ای (پرفروش)',
+                    desc: 'بهترین انتخاب برای استریم یوتیوب با کیفیت 4K و دانلود',
+                    price: '۲۹۰,۰۰۰',
+                    features: ['۹۰ گیگابایت ترافیک پرسرعت', 'اتصال ۳ کاربر همزمان', 'پروتکل VLESS Reality + Hysteria2', 'تضمین پینگ زیر ۳۵ms'],
+                    vip: true
+                },
+                {
+                    id: 'tier-3',
+                    name: 'پلن نامحدود طلایی (VIP)',
+                    desc: 'ویژه گیمینگ بدون پکت‌لاس، ترید ارز دیجیتال و دورکاری',
+                    price: '۴۹۰,۰۰۰',
+                    features: ['ترافیک نامحدود منصفانه', 'آی‌پی ۱۰۰٪ ثابت و تمیز', 'اتصال ۵ کاربر همزمان', 'پشتیبانی اختصاصی فوری'],
+                    vip: false
+                }
+            ],
+            orders: [
+                {
+                    id: 'ORD-771',
+                    user: 'ali_rezaei',
+                    plan: 'پلن ۳ ماهه نقره‌ای (پرفروش)',
+                    price: '۲۹۰,۰۰۰',
+                    tracking: '84928172',
+                    cardDigits: '4481',
+                    status: 'approved',
+                    time: 'امروز، ۱۲:۳۰'
+                },
+                {
+                    id: 'ORD-772',
+                    user: 'sara_tehrani',
+                    plan: 'پلن ۱ ماهه برنزی',
+                    price: '۱۴۰,۰۰۰',
+                    tracking: '91820491',
+                    cardDigits: '1092',
+                    status: 'pending',
+                    time: '۱۰ دقیقه پیش'
+                }
+            ],
+            userServices: {
+                'ali_rezaei': [
+                    {
+                        id: 'srv-101',
+                        title: 'سرور اختصاصی آلمان (VLESS Reality)',
+                        config: 'vless://4a39b2cd-9812-4c28-98f1-c4e97a3891b2@de-frankfurt.cybershield.net:443?security=reality&sni=speedtest.net&fp=chrome&pbk=J8f921_xKa8912PzX&sid=6a8b#CyberShield-DE-VIP',
+                        trafficTotal: '90 GB',
+                        trafficUsed: '28 GB',
+                        daysLeft: 27
+                    }
+                ]
+            },
+            messages: [
+                { id: 1, sender: 'user', username: 'ali_rezaei', text: 'سلام، تست کردم و با اینترنت همراه اول سرعت عالیه، تشکر!', time: '۱۲:۳۵' },
+                { id: 2, sender: 'admin', username: 'ali_rezaei', text: 'درود بر شما! خوشحالیم از رضایتتون. تیم پشتیبانی سایبرشیلد در خدمت شماست.', time: '۱۲:۳۸' }
+            ]
+        };
+
+        function fetchAppState() {
+            try {
+                const raw = SafeStorage.getItem('CYBERSHIELD_DB_V2');
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return JSON.parse(JSON.stringify(DEFAULT_DATABASE));
+        }
+
+        function commitAppState(data) {
+            try {
+                SafeStorage.setItem('CYBERSHIELD_DB_V2', JSON.stringify(data));
+            } catch (e) {}
+        }
+
+        
+        const SafeStorage = {
+            _mem: {},
+            getItem(key) {
+                try {
+                    return window.localStorage ? window.SafeStorage.getItem(key) : (this._mem[key] || null);
+                } catch (e) {
+                    return this._mem[key] || null;
+                }
+            },
+            setItem(key, val) {
+                try {
+                    if (window.localStorage) window.SafeStorage.setItem(key, val);
+                } catch (e) {}
+                this._mem[key] = val;
+            }
+        };
+
+        let appState = fetchAppState();
+        let currentUser = SafeStorage.getItem('CYBERSHIELD_USER') || 'ali_rezaei';
+        let currentCheckoutPlan = null;
+        let selectedAdminChatUser = 'ali_rezaei';
+
+        /* -------------------------------------------------------------
+           3. LIVE DOM SYNCHRONIZATION
+        ------------------------------------------------------------- */
+        function refreshDOM() {
+            // Header & Hero
+            document.getElementById('site-logo-text').innerText = appState.siteSettings.siteName;
+            document.getElementById('hero-tag-text').innerText = appState.siteSettings.heroTag;
+            document.getElementById('hero-title-text').innerText = appState.siteSettings.heroTitle;
+            document.getElementById('hero-desc-text').innerText = appState.siteSettings.heroDesc;
+
+            // Card display
+            document.getElementById('card-digits-display').innerText = appState.siteSettings.cardNum;
+            document.getElementById('card-owner-display').innerText = appState.siteSettings.cardOwner;
+            document.getElementById('card-bank-display').innerText = appState.siteSettings.cardBank;
+
+            // Render Pricing Cards
+            const deck = document.getElementById('pricing-deck-holder');
+            deck.innerHTML = '';
+            appState.plans.forEach(plan => {
+                const card = document.createElement('div');
+                card.className = `pricing-card ${plan.vip ? 'vip-tier' : ''}`;
+                card.setAttribute('onmousemove', 'tiltCard(event)');
+                card.setAttribute('onmouseleave', 'resetCardTilt()');
+                card.innerHTML = `
+                    ${plan.vip ? '<div class="badge-featured">پیشنهاد ویژه</div>' : ''}
+                    <div class="card-plan-name">${plan.name}</div>
+                    <div class="card-plan-desc">${plan.desc}</div>
+                    <div class="card-price-row">
+                        <span class="card-price-num">${plan.price}</span>
+                        <span class="card-price-unit">تومان</span>
+                    </div>
+                    <ul class="features-list">
+                        ${plan.features.map(f => `<li><span class="feat-bullet">✓</span> ${f}</li>`).join('')}
+                    </ul>
+                    <button class="btn ${plan.vip ? 'btn-purple' : 'btn-cyan'}" onclick="triggerCheckout('${plan.id}')">
+                        سفارش و تحویل آنی
+                    </button>
+                `;
+                deck.appendChild(card);
+            });
+
+            // Populate Admin CMS fields
+            document.getElementById('adm-site-name').value = appState.siteSettings.siteName;
+            document.getElementById('adm-hero-tag').value = appState.siteSettings.heroTag;
+            document.getElementById('adm-hero-title').value = appState.siteSettings.heroTitle;
+            document.getElementById('adm-hero-desc').value = appState.siteSettings.heroDesc;
+            document.getElementById('adm-card-num').value = appState.siteSettings.cardNum;
+            document.getElementById('adm-card-owner').value = appState.siteSettings.cardOwner;
+            document.getElementById('adm-card-bank').value = appState.siteSettings.cardBank;
+
+            renderAdminOrdersTable();
+            renderAdminIssuedServices();
+            renderUserServicesView();
+            renderUserChatView();
+            renderAdminChatUserList();
+        }
+
+        /* -------------------------------------------------------------
+           4. 3D CARD TILT INTERACTION
+        ------------------------------------------------------------- */
+        function tiltCard(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+
+        function resetCardTilt() {
+            if (event && event.currentTarget) {
+                event.currentTarget.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            }
+        }
+
+        /* -------------------------------------------------------------
+           5. MODALS & TOAST UTILITIES
+        ------------------------------------------------------------- */
+        function openModal(id) {
+            playSciFiSound('open');
+            document.getElementById(id).style.display = 'flex';
+        }
+        function closeModal(id) {
+            playSciFiSound('click');
+            document.getElementById(id).style.display = 'none';
+        }
+        function showToast(msg, ico = '⚡') {
+            const toast = document.getElementById('hud-toast');
+            document.getElementById('toast-text').innerText = msg;
+            document.getElementById('toast-ico').innerText = ico;
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3500);
+        }
+
+        /* -------------------------------------------------------------
+           6. CHECKOUT & PAYMENT FLOW (کارت به کارت)
+        ------------------------------------------------------------- */
+        function triggerCheckout(planId) {
+            playSciFiSound('click');
+            const plan = appState.plans.find(p => p.id === planId) || appState.plans[0];
+            currentCheckoutPlan = plan;
+            document.getElementById('co-plan-name-display').innerText = plan.name;
+            document.getElementById('co-plan-price-display').innerText = plan.price + ' تومان';
+            document.getElementById('co-user-field').value = currentUser;
+            openModal('modal-checkout');
+        }
+
+        function copyCardNumberToClipboard() {
+            const num = appState.siteSettings.cardNum.replace(/-/g, '');
+            navigator.clipboard.writeText(num).then(() => {
+                playSciFiSound('success');
+                showToast('شماره کارت بانکی در حافظه کپی شد', '📋');
+            }).catch(() => {
+                showToast('شماره کارت: ' + num);
+            });
+        }
+
+        function handlePaymentSubmit(e) {
+            e.preventDefault();
+            playSciFiSound('success');
+
+            const uname = document.getElementById('co-user-field').value.trim();
+            const contact = document.getElementById('co-contact-field').value.trim();
+            const cardDigits = document.getElementById('co-card-digits-field').value.trim();
+            const tracking = document.getElementById('co-tracking-field').value.trim();
+
+            if (!uname || !tracking) {
+                showToast('لطفا اطلاعات ضروری را تکمیل کنید', '⚠️');
+                return;
+            }
+
+            currentUser = uname;
+            SafeStorage.setItem('CYBERSHIELD_USER', currentUser);
+
+            const newOrder = {
+                id: 'ORD-' + Math.floor(100 + Math.random() * 900),
+                user: uname,
+                plan: currentCheckoutPlan ? currentCheckoutPlan.name : 'اشتراک VPN',
+                price: currentCheckoutPlan ? currentCheckoutPlan.price : '۲۹۰,۰۰۰',
+                tracking: tracking,
+                cardDigits: cardDigits,
+                status: 'pending',
+                time: 'هم‌اکنون'
+            };
+
+            appState.orders.unshift(newOrder);
+            commitAppState(appState);
+
+            closeModal('modal-checkout');
+            showToast('رسید پرداخت شما ثبت شد و در انتظار تأیید ادمین است.', '✅');
+            openUserDashboard();
+            refreshDOM();
+        }
+
+        /* -------------------------------------------------------------
+           7. USER DASHBOARD & LIVE MESSENGER
+        ------------------------------------------------------------- */
+        function openUserDashboard() {
+            document.getElementById('active-user-name').innerText = currentUser;
+            renderUserServicesView();
+            renderUserChatView();
+            openModal('modal-user');
+        }
+
+        function promptSwitchUser() {
+            const name = prompt('نام کاربری مورد نظر را وارد نمایید:', currentUser);
+            if (name && name.trim()) {
+                currentUser = name.trim();
+                SafeStorage.setItem('CYBERSHIELD_USER', currentUser);
+                document.getElementById('active-user-name').innerText = currentUser;
+                renderUserServicesView();
+                renderUserChatView();
+                showToast(`ورود به حساب ${currentUser} انجام شد`);
+            }
+        }
+
+        function switchUserTab(tabId) {
+            playSciFiSound('click');
+            document.querySelectorAll('#modal-user .tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#modal-user .tab-content-panel').forEach(c => c.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+        }
+
+        function renderUserServicesView() {
+            const container = document.getElementById('user-services-container');
+            const services = appState.userServices[currentUser] || [];
+            const pendingOrders = appState.orders.filter(o => o.user === currentUser && o.status === 'pending');
+
+            let html = '';
+
+            if (pendingOrders.length > 0) {
+                html += `
+                    <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.35); border-radius:16px; padding:18px; margin-bottom:20px;">
+                        <div style="color:var(--amber); font-weight:800; margin-bottom:6px;">⏳ فیش پرداخت در انتظار تأیید ادمین:</div>
+                        ${pendingOrders.map(o => `<div style="font-size:13.5px; color:#cbd5e1;">${o.plan} (کد پیگیری: ${o.tracking}) — پس از بررسی تایید می‌شود</div>`).join('')}
+                    </div>
+                `;
+            }
+
+            if (services.length === 0 && pendingOrders.length === 0) {
+                html += `
+                    <div style="text-align:center; padding:50px 20px; color:var(--text-muted);">
+                        <div style="font-size:42px; margin-bottom:14px;">🛰️</div>
+                        <p style="font-size:16px; margin-bottom:18px;">هنوز سرویس فعالی برای حساب «${currentUser}» ثبت نشده است.</p>
+                        <a href="#plans" class="btn btn-cyan" onclick="closeModal('modal-user')">مشاهده و خرید پلن‌ها</a>
+                    </div>
+                `;
+            } else {
+                services.forEach(srv => {
+                    html += `
+                        <div class="service-inventory-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h4 style="color:#fff; font-weight:800; font-size:16px;">⚡ ${srv.title}</h4>
+                                <span class="status-badge approved">فعال و پرسرعت</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted);">
+                                <span>مصرف ترافیک: ${srv.trafficUsed} از ${srv.trafficTotal}</span>
+                                <span>${srv.daysLeft} روز باقی‌مانده</span>
+                            </div>
+                            <label class="input-label" style="margin-top:14px;">کانفیگ اختصاصی شما (جهت اتصال در کلاینت):</label>
+                            <div class="config-terminal" id="cfg-${srv.id}">
+                                ${srv.config}
+                            </div>
+                            <div style="display:flex; gap:12px; margin-top:14px;">
+                                <button class="btn btn-cyan" style="padding:7px 18px; font-size:13px;" onclick="copyServiceConfig('${srv.id}')">
+                                    📋 کپی کانفیگ VLESS
+                                </button>
+                                <button class="btn btn-ghost" style="padding:7px 16px; font-size:13px;" onclick="displayQRCodeModal('${srv.config}')">
+                                    📲 بارکد QR
+                                </button>
+                                <button class="btn btn-ghost" style="padding:7px 16px; font-size:13px;" onclick="showToast('اتصال پایدار با تاخیر ۲۴ میلی‌ثانیه برقرار است', '🟢')">
+                                    🔄 تست اتصال
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            container.innerHTML = html;
+        }
+
+        function copyServiceConfig(id) {
+            const el = document.getElementById(`cfg-${id}`);
+            if (el) {
+                navigator.clipboard.writeText(el.innerText.trim()).then(() => {
+                    playSciFiSound('success');
+                    showToast('کانفیگ با موفقیت در کلیپ‌بورد کپی شد!', '✅');
+                });
+            }
+        }
+
+        function displayQRCodeModal(configText) {
+            playSciFiSound('open');
+            drawSimpleQR(configText);
+            openModal('modal-qr');
+        }
+
+        function drawSimpleQR(text) {
+            const canvas = document.getElementById('qr-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 220, 220);
+            ctx.fillStyle = '#030712';
+            
+            // Draw stylized QR Matrix pattern representation
+            const size = 18;
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const isCorner = (i < 4 && j < 4) || (i > size - 5 && j < 4) || (i < 4 && j > size - 5);
+                    const pseudoHash = ((i * 37 + j * 19 + text.length) % 7 === 0);
+                    if (isCorner || pseudoHash) {
+                        ctx.fillRect(20 + i * 10, 20 + j * 10, 8, 8);
+                    }
+                }
+            }
+        }
+
+        function renderUserChatView() {
+            const stream = document.getElementById('user-chat-stream');
+            const msgs = appState.messages.filter(m => m.username === currentUser);
+            if (msgs.length === 0) {
+                stream.innerHTML = '<div style="text-align:center; color:var(--text-muted); margin-top:60px;">پیام خود را به ادمین پشتیبانی بنویسید تا پاسخ دریافت نمایید.</div>';
+                return;
+            }
+            stream.innerHTML = msgs.map(m => `
+                <div class="chat-bubble ${m.sender === 'admin' ? 'admin-role' : 'user-role'}">
+                    <div>${m.text}</div>
+                    <span class="chat-timestamp">${m.sender === 'admin' ? '🛡️ پشتیبانی سایبرشیلد' : 'شما'} • ${m.time}</span>
+                </div>
+            `).join('');
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function submitUserChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-chat-input');
+            const val = input.value.trim();
+            if (!val) return;
+
+            playSciFiSound('click');
+            const newMsg = {
+                id: Date.now(),
+                sender: 'user',
+                username: currentUser,
+                text: val,
+                time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            appState.messages.push(newMsg);
+            commitAppState(appState);
+            input.value = '';
+            renderUserChatView();
+            showToast('پیام به پشتیبانی ارسال شد');
+        }
+
+        function grantInstantTestAccount() {
+            playSciFiSound('success');
+            currentUser = 'guest_' + Math.floor(100 + Math.random() * 900);
+            SafeStorage.setItem('CYBERSHIELD_USER', currentUser);
+
+            if (!appState.userServices[currentUser]) {
+                appState.userServices[currentUser] = [];
+            }
+            appState.userServices[currentUser].push({
+                id: 'test-' + Date.now(),
+                title: 'تست رایگان ۲۴ ساعته (سرور آلمان)',
+                config: 'vless://test-free-reality-1294812@de-frankfurt.cybershield.net:443?security=reality&sni=speedtest.net#CyberShield-FreeTest',
+                trafficTotal: '3 GB',
+                trafficUsed: '0 GB',
+                daysLeft: 1
+            });
+
+            commitAppState(appState);
+            showToast('اکانت تست ۲۴ ساعته فعال شد!', '🎁');
+            openUserDashboard();
+        }
+
+        /* -------------------------------------------------------------
+           8. SECRET ADMIN VAULT ENGINE (رمز عبور: admin777)
+        ------------------------------------------------------------- */
+        function openAdminTerminal() {
+            openModal('modal-admin');
+        }
+
+        function authenticateAdmin() {
+            const pass = document.getElementById('admin-secret-pass').value;
+            if (pass === 'admin777' || pass === 'admin') {
+                playSciFiSound('success');
+                document.getElementById('admin-passcode-view').style.display = 'none';
+                document.getElementById('admin-dashboard-view').style.display = 'block';
+                refreshDOM();
+                showToast('دسترسی مجاز: ورود به ترمینال مدیریت', '🔓');
+            } else {
+                showToast('رمز عبور ادمین نادرست است (پیش‌فرض: admin777)', '❌');
+            }
+        }
+
+        function switchAdminTab(tabId) {
+            playSciFiSound('click');
+            document.querySelectorAll('#modal-admin .tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.admin-tab-view').forEach(v => v.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+        }
+
+        function handleSaveCMS(e) {
+            e.preventDefault();
+            playSciFiSound('success');
+            appState.siteSettings = {
+                siteName: document.getElementById('adm-site-name').value,
+                heroTag: document.getElementById('adm-hero-tag').value,
+                heroTitle: document.getElementById('adm-hero-title').value,
+                heroDesc: document.getElementById('adm-hero-desc').value,
+                cardNum: document.getElementById('adm-card-num').value,
+                cardOwner: document.getElementById('adm-card-owner').value,
+                cardBank: document.getElementById('adm-card-bank').value
+            };
+            commitAppState(appState);
+            refreshDOM();
+            showToast('تغییرات سایت ذخیره و بلادرنگ اعمال شدند', '💾');
+        }
+
+        function resetDefaultDatabase() {
+            if (confirm('آیا از بازگردانی تمامی بخش‌های سایت به تنظیمات اولیه اطمینان دارید؟')) {
+                appState = JSON.parse(JSON.stringify(DEFAULT_DATABASE));
+                commitAppState(appState);
+                refreshDOM();
+                showToast('تنظیمات به حالت اولیه بازگشت');
+            }
+        }
+
+        function renderAdminOrdersTable() {
+            const tbody = document.getElementById('adm-orders-tbody');
+            tbody.innerHTML = appState.orders.map(o => `
+                <tr>
+                    <td><strong>${o.user}</strong></td>
+                    <td>${o.plan}</td>
+                    <td>${o.price}</td>
+                    <td><code style="color:var(--cyan);">${o.tracking}</code></td>
+                    <td><code>${o.cardDigits}</code></td>
+                    <td>
+                        <span class="status-badge ${o.status}">
+                            ${o.status === 'approved' ? 'تأیید شده' : 'در انتظار بررسی'}
+                        </span>
+                    </td>
+                    <td>
+                        ${o.status === 'pending' ? `
+                            <button class="btn btn-cyan" style="padding:4px 10px; font-size:11px;" onclick="approveOrderAction('${o.id}')">تأیید و تحویل</button>
+                            <button class="btn btn-ghost" style="padding:4px 8px; font-size:11px; color:var(--rose);" onclick="rejectOrderAction('${o.id}')">رد</button>
+                        ` : '<span style="color:var(--emerald);">انجام شد</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveOrderAction(id) {
+            playSciFiSound('success');
+            const ord = appState.orders.find(o => o.id === id);
+            if (ord) {
+                ord.status = 'approved';
+                if (!appState.userServices[ord.user]) appState.userServices[ord.user] = [];
+
+                const generatedConfig = `vless://${Math.random().toString(36).substring(2)}@de.cybershield.pro:443?security=reality&sni=speedtest.net&fp=chrome#CyberShield-${ord.user}`;
+                appState.userServices[ord.user].push({
+                    id: 'srv-' + Date.now(),
+                    title: `سرویس فعال (${ord.plan})`,
+                    config: generatedConfig,
+                    trafficTotal: '90 GB',
+                    trafficUsed: '0 GB',
+                    daysLeft: 30
+                });
+
+                appState.messages.push({
+                    id: Date.now(),
+                    sender: 'admin',
+                    username: ord.user,
+                    text: `سلام! فیش شما با کد پیگیری ${ord.tracking} تأیید شد و سرویس متنی در پنل شما قرار گرفت.`,
+                    time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+                });
+
+                commitAppState(appState);
+                refreshDOM();
+                showToast(`سفارش کاربر ${ord.user} تأیید و کانفیگ تحویل شد!`, '🎉');
+            }
+        }
+
+        function rejectOrderAction(id) {
+            appState.orders = appState.orders.filter(o => o.id !== id);
+            commitAppState(appState);
+            refreshDOM();
+            showToast('سفارش حذف شد');
+        }
+
+        function handleDispatchConfig(e) {
+            e.preventDefault();
+            playSciFiSound('success');
+            const user = document.getElementById('dsp-username').value.trim();
+            const title = document.getElementById('dsp-title').value.trim();
+            const code = document.getElementById('dsp-code').value.trim();
+
+            if (!user || !code) return;
+
+            if (!appState.userServices[user]) appState.userServices[user] = [];
+            appState.userServices[user].unshift({
+                id: 'srv-' + Date.now(),
+                title: title,
+                config: code,
+                trafficTotal: '90 GB',
+                trafficUsed: '0 GB',
+                daysLeft: 30
+            });
+
+            appState.messages.push({
+                id: Date.now(),
+                sender: 'admin',
+                username: user,
+                text: `کانفیگ جدید شما با عنوان «${title}» به پنل افزوده شد.`,
+                time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+            });
+
+            commitAppState(appState);
+            document.getElementById('dsp-code').value = '';
+            refreshDOM();
+            showToast(`کانفیگ با موفقیت به کاربر ${user} ارسال شد!`, '🚀');
+        }
+
+        function renderAdminIssuedServices() {
+            const list = document.getElementById('adm-issued-services-list');
+            let html = '';
+            for (const [user, srvs] of Object.entries(appState.userServices)) {
+                srvs.forEach(s => {
+                    html += `
+                        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:12px; border-radius:12px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <strong style="color:var(--cyan);">${user}</strong> : ${s.title}
+                            </div>
+                            <button class="btn btn-ghost" style="padding:4px 10px; font-size:11px; color:var(--rose);" onclick="removeIssuedService('${user}', '${s.id}')">حذف</button>
+                        </div>
+                    `;
+                });
+            }
+            list.innerHTML = html || '<div style="color:var(--text-muted); font-size:13px;">هنوز سرویسی صادر نشده است.</div>';
+        }
+
+        function removeIssuedService(u, id) {
+            if (appState.userServices[u]) {
+                appState.userServices[u] = appState.userServices[u].filter(s => s.id !== id);
+                commitAppState(appState);
+                refreshDOM();
+                showToast('سرویس حذف گردید');
+            }
+        }
+
+        function renderAdminChatUserList() {
+            const el = document.getElementById('adm-chat-user-list');
+            const users = Array.from(new Set(appState.messages.map(m => m.username)));
+            if (users.length === 0) {
+                el.innerHTML = '<div style="padding:16px; color:var(--text-muted); font-size:12px;">هنوز پیامی وجود ندارد</div>';
+                return;
+            }
+            el.innerHTML = users.map(u => `
+                <div style="padding:12px 16px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.04); background:${u === selectedAdminChatUser ? 'rgba(168,85,247,0.18)' : 'transparent'};" onclick="pickAdminChatUser('${u}')">
+                    <div style="font-weight:700; font-size:13px; color:#fff;">👤 ${u}</div>
+                </div>
+            `).join('');
+
+            renderAdminActiveChatStream();
+        }
+
+        function pickAdminChatUser(u) {
+            playSciFiSound('click');
+            selectedAdminChatUser = u;
+            renderAdminChatUserList();
+        }
+
+        function renderAdminActiveChatStream() {
+            const stream = document.getElementById('adm-active-chat-stream');
+            const msgs = appState.messages.filter(m => m.username === selectedAdminChatUser);
+            if (msgs.length === 0) {
+                stream.innerHTML = `<div style="text-align:center; color:var(--text-muted); margin-top:40px;">هیچ پیامی با کاربر ${selectedAdminChatUser} وجود ندارد</div>`;
+                return;
+            }
+            stream.innerHTML = msgs.map(m => `
+                <div class="chat-bubble ${m.sender === 'admin' ? 'admin-role' : 'user-role'}">
+                    <div>${m.text}</div>
+                    <span class="chat-timestamp">${m.sender === 'admin' ? '🛡️ ادمین' : m.username} • ${m.time}</span>
+                </div>
+            `).join('');
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function handleSendAdminReply(e) {
+            e.preventDefault();
+            playSciFiSound('click');
+            const input = document.getElementById('adm-reply-text');
+            const val = input.value.trim();
+            if (!val || !selectedAdminChatUser) return;
+
+            const newMsg = {
+                id: Date.now(),
+                sender: 'admin',
+                username: selectedAdminChatUser,
+                text: val,
+                time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            appState.messages.push(newMsg);
+            commitAppState(appState);
+            input.value = '';
+            renderAdminActiveChatStream();
+            showToast(`پاسخ به ${selectedAdminChatUser} ارسال شد`, '📨');
+        }
+
+        // Global Shortcut for Secret Admin Panel: Ctrl + Shift + A
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                openAdminTerminal();
+            }
+        });
+
+        // Listen for #admin URL hash
+        window.addEventListener('hashchange', () => {
+            if (location.hash === '#admin') openAdminTerminal();
+        });
+        if (location.hash === '#admin') openAdminTerminal();
+
+        /* -------------------------------------------------------------
+           9. 3D INTERACTIVE QUANTUM MATRIX ENGINE (Canvas 3D WebGL)
+        ------------------------------------------------------------- */
+        function boot3DQuantumEngine() {
+            const canvas = document.getElementById('webgl-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let nodes = [];
+            const NUM_NODES = 130;
+            const RADIUS = 155;
+            let rotX = 0, rotY = 0;
+            let targetRotX = 0, targetRotY = 0;
+            let isDragging = false;
+            let lastMouseX = 0, lastMouseY = 0;
+
+            let lastTime = performance.now();
+            let frameCount = 0;
+            let fpsElem = document.getElementById('fps-counter');
+
+            function handleResize() {
+                const rect = canvas.getBoundingClientRect();
+                width = canvas.width = rect.width;
+                height = canvas.height = rect.height;
+            }
+            handleResize();
+            window.addEventListener('resize', handleResize);
+
+            // Generate Spherical Fibonacci point distribution
+            for (let i = 0; i < NUM_NODES; i++) {
+                const phi = Math.acos(1 - 2 * (i + 0.5) / NUM_NODES);
+                const theta = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5);
+                nodes.push({
+                    x: RADIUS * Math.sin(phi) * Math.cos(theta),
+                    y: RADIUS * Math.sin(phi) * Math.sin(theta),
+                    z: RADIUS * Math.cos(phi),
+                    pulse: Math.random() * Math.PI,
+                    speed: 0.02 + Math.random() * 0.02
+                });
+            }
+
+            canvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            });
+            window.addEventListener('mouseup', () => isDragging = false);
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const dx = e.clientX - lastMouseX;
+                    const dy = e.clientY - lastMouseY;
+                    targetRotY += dx * 0.007;
+                    targetRotX += dy * 0.007;
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+                }
+            });
+
+            // Touch interaction for mobile
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    lastMouseX = e.touches[0].clientX;
+                    lastMouseY = e.touches[0].clientY;
+                }
+            });
+            window.addEventListener('touchend', () => isDragging = false);
+            window.addEventListener('touchmove', (e) => {
+                if (isDragging && e.touches.length === 1) {
+                    const dx = e.touches[0].clientX - lastMouseX;
+                    const dy = e.touches[0].clientY - lastMouseY;
+                    targetRotY += dx * 0.007;
+                    targetRotX += dy * 0.007;
+                    lastMouseX = e.touches[0].clientX;
+                    lastMouseY = e.touches[0].clientY;
+                }
+            });
+
+            function render() {
+                targetRotY += 0.0035;
+                rotX += (targetRotX - rotX) * 0.06;
+                rotY += (targetRotY - rotY) * 0.06;
+
+                // FPS calculation
+                frameCount++;
+                const now = performance.now();
+                if (now - lastTime >= 1000) {
+                    if (fpsElem) fpsElem.innerText = frameCount + ' FPS';
+                    frameCount = 0;
+                    lastTime = now;
+                }
+
+                ctx.clearRect(0, 0, width, height);
+                const cx = width / 2;
+                const cy = height / 2;
+
+                const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+                const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+
+                const projected = [];
+
+                for (let i = 0; i < nodes.length; i++) {
+                    const n = nodes[i];
+                    n.pulse += n.speed;
+
+                    // 3D Matrix Rotation
+                    let x1 = n.x * cosY + n.z * sinY;
+                    let y1 = n.y;
+                    let z1 = -n.x * sinY + n.z * cosY;
+
+                    let x2 = x1;
+                    let y2 = y1 * cosX - z1 * sinX;
+                    let z2 = y1 * sinX + z1 * cosX;
+
+                    const fov = 400;
+                    const scale = fov / (fov + z2 + RADIUS);
+                    const px = cx + x2 * scale;
+                    const py = cy + y2 * scale;
+
+                    projected.push({ px, py, z: z2, scale, pulse: n.pulse });
+                }
+
+                // Render dynamic laser connections
+                ctx.lineWidth = 1;
+                for (let i = 0; i < projected.length; i++) {
+                    for (let j = i + 1; j < projected.length; j++) {
+                        const p1 = projected[i];
+                        const p2 = projected[j];
+                        const dist = Math.hypot(p1.px - p2.px, p1.py - p2.py);
+                        if (dist < 68) {
+                            const alpha = (1 - dist / 68) * 0.38 * Math.min(p1.scale, p2.scale);
+                            ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.px, p1.py);
+                            ctx.lineTo(p2.px, p2.py);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Render Glowing Nodes
+                for (let i = 0; i < projected.length; i++) {
+                    const p = projected[i];
+                    const radius = (2.2 + Math.sin(p.pulse) * 0.9) * p.scale;
+                    const alpha = Math.max(0.18, (p.z + RADIUS) / (2 * RADIUS));
+
+                    ctx.fillStyle = `rgba(0, 242, 254, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(p.px, p.py, radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Orbital Purple beacons
+                    if (i % 5 === 0) {
+                        ctx.fillStyle = `rgba(168, 85, 247, ${alpha * 0.9})`;
+                        ctx.beginPath();
+                        ctx.arc(p.px, p.py, radius * 1.6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // Center Holographic Core Glow
+                const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, RADIUS * 0.75);
+                core.addColorStop(0, 'rgba(0, 242, 254, 0.08)');
+                core.addColorStop(0.5, 'rgba(168, 85, 247, 0.04)');
+                core.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = core;
+                ctx.beginPath();
+                ctx.arc(cx, cy, RADIUS * 0.75, 0, Math.PI * 2);
+                ctx.fill();
+
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        /* -------------------------------------------------------------
+           10. LIVE PING JITTER & METRIC SIMULATOR
+        ------------------------------------------------------------- */
+        function initPingJitter() {
+            setInterval(() => {
+                const de = 24 + Math.floor(Math.random() * 7);
+                const nl = 29 + Math.floor(Math.random() * 8);
+                const fi = 36 + Math.floor(Math.random() * 7);
+                const tr = 18 + Math.floor(Math.random() * 5);
+                const sg = 51 + Math.floor(Math.random() * 8);
+
+                document.getElementById('ping-de').innerText = de + ' ms';
+                document.getElementById('ping-nl').innerText = nl + ' ms';
+                document.getElementById('ping-fi').innerText = fi + ' ms';
+                document.getElementById('ping-tr').innerText = tr + ' ms';
+                document.getElementById('ping-sg').innerText = sg + ' ms';
+            }, 3200);
+        }
+
+        // Initialize on DOM Ready
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshDOM();
+            boot3DQuantumEngine();
+            initPingJitter();
+        });
+    </script>
+</body>
+</html>
