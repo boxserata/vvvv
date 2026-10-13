@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS SHIELD | نسل نوین شبکه امن و اینترنت آزاد بین‌الملل</title>
+    <!-- Master Stylesheet -->
+    <style>/* NEXUS SHIELD — Enterprise Cybersecurity & Private Tunnel Platform */
+:root {
+    --bg-void: #05070d;
+    --bg-surface: rgba(11, 17, 32, 0.85);
+    --bg-card: rgba(15, 23, 42, 0.7);
+    --bg-glass: rgba(15, 23, 42, 0.45);
+    --cyan: #00f2fe;
+    --cyan-glow: rgba(0, 242, 254, 0.35);
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --purple-glow: rgba(139, 92, 246, 0.35);
+    --emerald: #10b981;
+    --emerald-glow: rgba(16, 185, 129, 0.3);
+    --amber: #f59e0b;
+    --rose: #f43f5e;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-cyan: rgba(0, 242, 254, 0.3);
+    --border-purple: rgba(139, 92, 246, 0.35);
+    --font-fa: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-full: 9999px;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-fa);
+    -webkit-font-smoothing: antialiased;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-void);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.7;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #05070d; }
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+/* Ambient */
+.cyber-canvas-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: 
+        radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.04) 0%, transparent 60%),
+        linear-gradient(rgba(0, 242, 254, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 254, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 50px 50px, 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+.ambient-flare {
+    position: fixed; border-radius: 50%; filter: blur(120px);
+    pointer-events: none; z-index: 0; opacity: 0.18;
+}
+.flare-1 {
+    width: 650px; height: 650px; top: -250px; right: -150px;
+    background: radial-gradient(circle, var(--cyan) 0%, rgba(0,0,0,0) 70%);
+}
+.flare-2 {
+    width: 750px; height: 750px; bottom: -250px; left: -200px;
+    background: radial-gradient(circle, var(--purple) 0%, rgba(0,0,0,0) 70%);
+}
+.container {
+    max-width: 1260px; margin: 0 auto; padding: 0 24px;
+    position: relative; z-index: 2;
+}
+
+/* Header */
+header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    background: rgba(5, 7, 13, 0.88); border-bottom: 1px solid var(--border-subtle);
+    padding: 16px 0; transition: var(--transition-fast);
+}
+header:hover { border-bottom-color: rgba(0, 242, 254, 0.25); }
+.nav-row { display: flex; align-items: center; justify-content: space-between; }
+.brand-wrapper { display: flex; align-items: center; gap: 14px; cursor: pointer; text-decoration: none; }
+.brand-icon-shield {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, #00f2fe, #7928ca);
+    display: flex; align-items: center; justify-content: center;
+    color: #05070d; font-size: 22px; box-shadow: 0 0 25px var(--cyan-glow);
+}
+.brand-title {
+    font-size: 20px; font-weight: 900; letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #ffffff, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.system-status-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 12px; border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25);
+    font-size: 11.5px; color: var(--emerald); font-weight: 600;
+}
+.pulsing-indicator {
+    width: 8px; height: 8px; background: var(--emerald);
+    border-radius: 50%; box-shadow: 0 0 10px var(--emerald);
+    animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+@keyframes radar-pulse {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    50% { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.9; }
+}
+.nav-actions-group { display: flex; align-items: center; gap: 12px; }
+.sound-toggle-btn {
+    background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle);
+    color: var(--text-secondary); width: 42px; height: 42px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: var(--transition-fast); font-size: 17px;
+}
+.sound-toggle-btn:hover { color: var(--cyan); border-color: var(--border-cyan); }
+.sound-toggle-btn.active {
+    color: var(--cyan); background: rgba(0, 242, 254, 0.1);
+    border-color: var(--cyan); box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px; padding: 12px 26px; border-radius: var(--radius-md);
+    font-size: 14.5px; font-weight: 700; cursor: pointer;
+    transition: var(--transition-fast); border: none; text-decoration: none;
+    position: relative; user-select: none;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--cyan), #0284c7);
+    color: #05070d; box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+}
+.btn-primary:hover {
+    transform: translateY(-2px); box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+}
+.btn-secondary {
+    background: linear-gradient(135deg, var(--purple), #7c3aed);
+    color: #fff; box-shadow: 0 0 25px rgba(139, 92, 246, 0.35);
+}
+.btn-secondary:hover {
+    transform: translateY(-2px); box-shadow: 0 0 35px rgba(139, 92, 246, 0.6);
+}
+.btn-ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary); border: 1px solid var(--border-subtle);
+}
+.btn-ghost:hover {
+    background: rgba(0, 242, 254, 0.08); border-color: var(--border-cyan); color: var(--cyan);
+}
+
+/* Hero Section */
+.hero-matrix {
+    padding: 60px 0 40px; display: grid; grid-template-columns: 1.1fr 0.9fr;
+    align-items: center; gap: 40px; min-height: 640px;
+}
+.hero-pill-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(0, 242, 254, 0.06); border: 1px solid var(--border-cyan);
+    border-radius: var(--radius-full); padding: 7px 20px; margin-bottom: 22px;
+    font-size: 13.5px; color: var(--cyan); font-weight: 700;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+}
+.hero-headline {
+    font-size: 46px; font-weight: 900; line-height: 1.3; margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 95%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-subtext {
+    font-size: 16.5px; color: var(--text-secondary); margin-bottom: 34px;
+    line-height: 1.9; max-width: 540px;
+}
+.hero-action-buttons { display: flex; align-items: center; gap: 16px; margin-bottom: 44px; }
+.hero-metrics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    border-top: 1px solid var(--border-subtle); padding-top: 26px;
+}
+.metric-box h4 {
+    font-family: var(--font-mono); font-size: 26px; font-weight: 900; color: var(--cyan);
+}
+.metric-box p { font-size: 12.5px; color: var(--text-secondary); }
+
+/* 3D World Globe Viewer */
+.globe-viewport-container {
+    position: relative; width: 100%; height: 520px;
+    display: flex; align-items: center; justify-content: center;
+}
+#globe-canvas {
+    width: 100%; height: 100%; border-radius: 28px; cursor: grab;
+    filter: drop-shadow(0 0 45px rgba(0, 242, 254, 0.2));
+}
+#globe-canvas:active { cursor: grabbing; }
+
+.globe-server-hud {
+    position: absolute; bottom: 20px; right: 20px;
+    background: rgba(8, 12, 22, 0.88); backdrop-filter: blur(16px);
+    border: 1px solid var(--border-cyan); border-radius: var(--radius-md);
+    padding: 14px 18px; display: flex; flex-direction: column; gap: 8px;
+    min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+.hud-country-head {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; font-weight: 800;
+}
+.hud-ping-val {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+    color: var(--emerald); background: rgba(16, 185, 129, 0.12);
+    padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.hud-stats-row {
+    display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-muted);
+}
+
+/* Country Server Explorer */
+.server-explorer-section {
+    margin: 40px 0 80px; background: var(--bg-surface); backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+    padding: 32px; box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+}
+.explorer-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 18px; flex-wrap: wrap; gap: 14px;
+}
+.explorer-header h3 {
+    font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 10px;
+}
+.country-nav-deck { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.country-tab-btn {
+    background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+    color: var(--text-secondary); padding: 9px 18px; border-radius: var(--radius-md);
+    cursor: pointer; font-size: 13.5px; font-weight: 700; display: flex; align-items: center;
+    gap: 8px; transition: var(--transition-fast);
+}
+.country-tab-btn:hover {
+    color: var(--cyan); border-color: var(--border-cyan); background: rgba(0, 242, 254, 0.04);
+}
+.country-tab-btn.active {
+    background: rgba(0, 242, 254, 0.12); border-color: var(--cyan);
+    color: var(--cyan); box-shadow: 0 0 18px rgba(0, 242, 254, 0.2);
+}
+.server-scorecard-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;
+}
+.server-node-card {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column;
+    justify-content: space-between; transition: var(--transition-fast);
+}
+.server-node-card:hover {
+    border-color: var(--border-cyan); background: rgba(0, 242, 254, 0.03); transform: translateY(-3px);
+}
+.node-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.node-flag { font-size: 26px; }
+.node-name { font-size: 15px; font-weight: 800; color: #fff; }
+.node-isp-compat {
+    font-size: 11.5px; color: var(--emerald); background: rgba(16, 185, 129, 0.1);
+    padding: 3px 8px; border-radius: 6px; display: inline-block; margin-top: 6px;
+}
+.node-specs-table { margin: 14px 0; font-size: 12.5px; color: var(--text-secondary); }
+.node-spec-row {
+    display: flex; justify-content: space-between; padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.node-load-bar {
+    height: 6px; background: rgba(255, 255, 255, 0.08); border-radius: 6px;
+    overflow: hidden; margin-top: 10px;
+}
+.node-load-fill {
+    height: 100%; background: linear-gradient(90deg, var(--emerald), var(--cyan)); border-radius: 6px;
+}
+
+/* ISP Matrix */
+.isp-matrix-section { margin-bottom: 80px; }
+.isp-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-top: 24px;
+}
+.isp-card {
+    background: var(--bg-surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 20px; text-align: center; transition: var(--transition-fast);
+}
+.isp-card:hover { border-color: var(--cyan); }
+.isp-logo-icon { font-size: 32px; margin-bottom: 10px; }
+.isp-name { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+.isp-status-badge {
+    display: inline-block; padding: 4px 10px; border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 700; background: rgba(16, 185, 129, 0.15); color: var(--emerald);
+}
+
+/* Pricing Section */
+.section-headline-box { text-align: center; margin-bottom: 50px; }
+.section-kicker {
+    color: var(--cyan); font-size: 13.5px; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px;
+}
+.section-big-title { font-size: 38px; font-weight: 900; margin-bottom: 14px; }
+.section-lead { color: var(--text-secondary); max-width: 620px; margin: 0 auto; font-size: 16px; }
+
+.pricing-plans-deck {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 28px; margin-bottom: 90px; perspective: 1000px;
+}
+.plan-item-card {
+    background: var(--bg-surface); backdrop-filter: blur(20px); border: 1px solid var(--border-subtle);
+    border-radius: 26px; padding: 38px 30px; display: flex; flex-direction: column;
+    position: relative; transform-style: preserve-3d; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.plan-item-card:hover {
+    border-color: var(--cyan); box-shadow: 0 25px 60px rgba(0, 242, 254, 0.15);
+}
+.plan-item-card.featured-plan {
+    border-color: var(--purple);
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, rgba(11, 17, 32, 0.95) 100%);
+    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.18);
+}
+.plan-ribbon {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--purple), #ec4899); color: #fff;
+    padding: 5px 20px; border-radius: var(--radius-full); font-size: 12px; font-weight: 800;
+    box-shadow: 0 0 20px var(--purple-glow);
+}
+.plan-tier-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.plan-tier-desc { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px; min-height: 44px; }
+.plan-price-block {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle); padding-bottom: 22px;
+}
+.plan-price-val { font-size: 38px; font-weight: 900; color: #fff; }
+.plan-price-suffix { font-size: 14px; color: var(--text-secondary); }
+.plan-perks-list { list-style: none; margin-bottom: 34px; flex-grow: 1; }
+.plan-perks-list li {
+    font-size: 14px; color: #cbd5e1; margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+}
+.perk-check { color: var(--emerald); font-weight: 900; font-size: 16px; }
+
+/* Modals */
+.modal-layer-backdrop {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(3, 6, 15, 0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    z-index: 1000; display: none; align-items: center; justify-content: center;
+    padding: 24px; overflow-y: auto;
+}
+.modal-window {
+    background: #0b1120; border: 1px solid var(--border-cyan); border-radius: 28px;
+    width: 100%; max-width: 720px; padding: 40px; position: relative;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 45px rgba(0, 242, 254, 0.15);
+    max-height: 92vh; overflow-y: auto; animation: modalScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalScale {
+    from { transform: scale(0.92) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.modal-window.expanded { max-width: 1020px; }
+.modal-dismiss-btn {
+    position: absolute; top: 24px; left: 24px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle); color: #fff; width: 38px; height: 38px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px; transition: var(--transition-fast);
+}
+.modal-dismiss-btn:hover { background: var(--rose); border-color: var(--rose); transform: rotate(90deg); }
+.modal-header-title { font-size: 24px; font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+
+.form-field-group { margin-bottom: 20px; }
+.form-field-label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
+.ctrl-input, .ctrl-textarea {
+    width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 13px 18px; color: #fff; font-size: 14px;
+    outline: none; transition: var(--transition-fast);
+}
+.ctrl-input:focus, .ctrl-textarea:focus {
+    border-color: var(--cyan); background: rgba(0, 242, 254, 0.02); box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+}
+.ctrl-textarea { resize: vertical; min-height: 90px; }
+
+/* 3D Bank Card */
+.holo-credit-card {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 60%, #064e3b 100%);
+    border: 1px solid rgba(0, 242, 254, 0.45); border-radius: 20px; padding: 26px;
+    margin-bottom: 26px; position: relative; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 35px rgba(0, 242, 254, 0.1);
+    overflow: hidden; transform-style: preserve-3d; transition: transform 0.15s ease-out; cursor: pointer;
+}
+.card-gold-chip {
+    width: 48px; height: 36px; background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 8px; margin-bottom: 20px;
+}
+.card-number-string {
+    font-family: var(--font-mono); font-size: 24px; font-weight: 900; letter-spacing: 3.5px;
+    color: #fff; margin-bottom: 16px; direction: ltr; text-align: right;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.card-copy-badge {
+    font-size: 12px; padding: 5px 12px; background: rgba(0, 242, 254, 0.15);
+    border: 1px solid var(--cyan); color: var(--cyan); border-radius: 8px; cursor: pointer;
+    font-family: var(--font-fa); font-weight: 700;
+}
+.card-bottom-info { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
+
+/* User Hub */
+.sub-nav-tabs { display: flex; gap: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 26px; padding-bottom: 12px; }
+.sub-tab-btn {
+    background: none; border: none; color: var(--text-secondary); font-size: 14px;
+    font-weight: 700; padding: 9px 18px; cursor: pointer; border-radius: 10px; transition: var(--transition-fast);
+}
+.sub-tab-btn.active { color: var(--cyan); background: rgba(0, 242, 254, 0.1); }
+.service-card-item {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); padding: 24px; margin-bottom: 20px;
+}
+.service-config-box {
+    background: #030712; border: 1px solid var(--border-subtle); border-radius: 12px;
+    padding: 14px 16px; font-family: var(--font-mono); font-size: 12px; color: var(--cyan);
+    direction: ltr; text-align: left; word-break: break-all; margin-top: 12px; max-height: 95px; overflow-y: auto;
+}
+.data-progress-track {
+    height: 10px; background: rgba(255, 255, 255, 0.06); border-radius: 10px; overflow: hidden; margin: 14px 0;
+}
+.data-progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 10px; width: 45%;
+}
+
+/* Chat */
+.chat-window-frame {
+    display: flex; flex-direction: column; height: 410px; background: #030712;
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden;
+}
+.chat-stream-body { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.chat-msg-bubble { max-width: 78%; padding: 12px 18px; border-radius: 16px; font-size: 13.5px; line-height: 1.6; }
+.chat-msg-bubble.from-admin {
+    align-self: flex-start; background: rgba(139, 92, 246, 0.18); border: 1px solid var(--border-purple);
+    color: #f3e8ff; border-bottom-right-radius: 4px;
+}
+.chat-msg-bubble.from-user {
+    align-self: flex-end; background: rgba(0, 242, 254, 0.15); border: 1px solid var(--border-cyan);
+    color: #ecfeff; border-bottom-left-radius: 4px;
+}
+.msg-timestamp { font-size: 10px; opacity: 0.6; margin-top: 6px; display: block; }
+.chat-entry-bar {
+    padding: 14px; background: rgba(255, 255, 255, 0.02); border-top: 1px solid var(--border-subtle); display: flex; gap: 12px;
+}
+
+/* Admin Table */
+.adm-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 16px; }
+.adm-table th, .adm-table td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--border-subtle); }
+.adm-table th { color: var(--text-secondary); font-weight: 700; background: rgba(255, 255, 255, 0.02); }
+.badge-tag { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.badge-tag.approved { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
+.badge-tag.pending { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
+
+/* Toast */
+.live-toast-bar {
+    position: fixed; bottom: 30px; right: 30px; background: #0b1120;
+    border: 1px solid var(--cyan); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
+    padding: 16px 24px; border-radius: 14px; font-size: 14px; color: #fff; z-index: 2000;
+    display: none; align-items: center; gap: 12px; animation: toastPop 0.3s ease;
+}
+@keyframes toastPop {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--border-subtle); padding: 44px 0; margin-top: 90px;
+    background: #02040a; color: var(--text-secondary); font-size: 13px;
+}
+.footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.stealth-key-trigger {
+    opacity: 0.35; cursor: pointer; transition: var(--transition-fast); font-family: var(--font-mono);
+}
+.stealth-key-trigger:hover { opacity: 1; color: var(--cyan); }
+
+@media (max-width: 960px) {
+    .hero-matrix { grid-template-columns: 1fr; text-align: center; padding-top: 20px; }
+    .hero-subtext { margin: 0 auto 30px; }
+    .hero-action-buttons { justify-content: center; }
+    .hero-metrics-grid { justify-content: center; }
+    .globe-viewport-container { height: 380px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- Ambient Visual Effects -->
+    <div class="cyber-canvas-bg"></div>
+    <div class="ambient-flare flare-1"></div>
+    <div class="ambient-flare flare-2"></div>
+
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="container nav-row">
+            <a href="#" class="brand-wrapper" onclick="location.hash=''; return false;">
+                <div class="brand-icon-shield">🛡️</div>
+                <div>
+                    <div class="brand-title" id="brand-header-text">NEXUS SHIELD NET</div>
+                    <div class="system-status-chip"><span class="pulsing-indicator"></span> تمامی سرورها ۱۰۰٪ آنلاین و متصل</div>
+                </div>
+            </a>
+            <div class="nav-actions-group">
+                <button class="sound-toggle-btn active" id="sound-toggle-btn" onclick="AppCore.toggleAudio()" title="افکت صوتی سایبری">
+                    🔊
+                </button>
+                <button class="btn btn-ghost" onclick="openUserDashboard()">
+                    <span>👤</span> پنل کاربری
+                </button>
+                <a href="#plans" class="btn btn-primary">
+                    <span>⚡</span> خرید سرویس
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        
+        <!-- Hero Section & 3D Interactive World Globe -->
+        <section class="hero-matrix">
+            <div class="hero-info-col">
+                <div class="hero-pill-tag">
+                    <span>🚀</span> <span id="hero-kicker-badge">پروتکل ضد فیلترینگ VLESS Reality + Hysteria2</span>
+                </div>
+                <h1 class="hero-headline" id="hero-main-h1">اینترنت آزاد و پرسرعت، بدون قطعی با پینگ گیمینگ</h1>
+                <p class="hero-subtext" id="hero-lead-desc">
+                    دسترسی پایدار و بدون فیلتر به اینستاگرام، یوتیوب، تلگرام، وب‌سایت‌های خارجی و تریدینگ. با سرورهای اختصاصی در ۷ کشور جهان و اتصال تضمینی روی تمامی اپراتورهای ایرانسل، همراه اول، رایتل و مخابرات.
+                </p>
+                <div class="hero-action-buttons">
+                    <a href="#plans" class="btn btn-primary" style="padding: 15px 36px; font-size: 16px;">
+                        مشاهده پلن‌ها و خرید آنی
+                    </a>
+                    <button class="btn btn-ghost" onclick="AppCore.grantTrial()">
+                        تست رایگان ۲۴ ساعته
+                    </button>
+                </div>
+                <div class="hero-metrics-grid">
+                    <div class="metric-box">
+                        <h4>+۲۴,۸۰۰</h4>
+                        <p>کاربر فعال ماهانه</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>۹۹.۹۹٪</h4>
+                        <p>پایداری شبکه (Uptime)</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>< ۲۵ms</h4>
+                        <p>میانگین تأخیر سرورها</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Interactive World Globe Display -->
+            <div class="globe-viewport-container">
+                <canvas id="globe-canvas"></canvas>
+                <!-- Active Server Real-Time HUD Overlay -->
+                <div class="globe-server-hud">
+                    <div class="hud-country-head">
+                        <span id="hud-country-name">🇩🇪 فرانکفورت، آلمان</span>
+                        <span class="hud-ping-val" id="hud-ping-badge">27 ms</span>
+                    </div>
+                    <div style="font-size: 12px; color: #fff;" id="hud-datacenter-text">Hetzner Online GmbH (Frankfurt)</div>
+                    <div class="hud-stats-row">
+                        <span>پورت: ۱۰ گیگابیت اختصاصی</span>
+                        <span id="hud-load-text" style="color:var(--cyan);">بار سرور: ۳۸٪</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Country Server Explorer -->
+        <section class="server-explorer-section">
+            <div class="explorer-header">
+                <h3><span>📡</span> نقشه سرورهای جهانی نکسوس شیلد (انتخاب لوکیشن)</h3>
+                <span style="font-size: 12.5px; color: var(--text-secondary); font-family: var(--font-mono);">SYNC: LIVE GEO-ROUTING</span>
+            </div>
+
+            <!-- Country Selection Buttons -->
+            <div class="country-nav-deck" id="country-tabs-nav">
+                <!-- Dynamically populated by world-map.js -->
+            </div>
+
+            <!-- Detailed Server Node Scorecards -->
+            <div class="server-scorecard-grid" id="server-cards-grid">
+                <!-- Injected by world-map.js -->
+            </div>
+        </section>
+
+        <!-- Iranian ISP Real-time Compatibility Matrix -->
+        <section class="isp-matrix-section">
+            <div class="section-headline-box">
+                <div class="section-kicker">سازگاری با تمامی اپراتورهای اینترنت ایران</div>
+                <h2 class="section-big-title">تضمین اتصال بدون افت سرعت روی خطوط داخلی</h2>
+                <p class="section-lead">سیستم هوشمند نکسوس با تغییر خودکار پورت‌ها و پروتکل‌ها، فیلترینگ شدید را به‌طور کامل دور می‌زند.</p>
+            </div>
+
+            <div class="isp-grid">
+                <div class="isp-card">
+                    <div class="isp-logo-icon">📶</div>
+                    <div class="isp-name">همراه اول (MCI)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">پروتکل پیشنهادی: VLESS Reality پورت ۴۴۳</div>
+                    <span class="isp-status-badge">۱۰۰٪ پایدار و سریع</span>
+                </div>
+                <div class="isp-card">
+                    <div class="isp-logo-icon">🟡</div>
+                    <div class="isp-name">ایرانسل (MTN)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">پروتکل پیشنهادی: Hysteria 2 UDP</div>
+                    <span class="isp-status-badge">تست شده با سرعت 4K</span>
+                </div>
+                <div class="isp-card">
+                    <div class="isp-logo-icon">🟣</div>
+                    <div class="isp-name">رایتل (Rightel)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">پروتکل پیشنهادی: TUIC v5 / Reality</div>
+                    <span class="isp-status-badge">بدون قطعی و دیسکانکتی</span>
+                </div>
+                <div class="isp-card">
+                    <div class="isp-logo-icon">🏢</div>
+                    <div class="isp-name">مخابرات و شاتل (ADSL/FTTH)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">پروتکل پیشنهادی: Trojan gRPC</div>
+                    <span class="isp-status-badge">پینگ بهینه برای گیمینگ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plans & Pricing Deck -->
+        <section id="plans" style="padding-top: 30px;">
+            <div class="section-headline-box">
+                <div class="section-kicker">تعرفه‌های اشتراک اختصاصی</div>
+                <h2 class="section-big-title">پلن مناسب استفاده خود را انتخاب کنید</h2>
+                <p class="section-lead">همه پلن‌ها شامل آی‌پی اختصاصی و تمیز، پهنای باند پرسرعت نامحدود و ضمانت بازگشت وجه هستند.</p>
+            </div>
+
+            <div class="pricing-plans-deck" id="pricing-deck-grid">
+                <!-- Dynamically populated from state -->
+            </div>
+        </section>
+
+        <!-- Supported Client Apps -->
+        <section style="margin-bottom: 90px; text-align: center;">
+            <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">کلاینت‌ها و نرم‌افزارهای استاندارد اتصال</h3>
+            <p style="font-size: 14px; color: var(--text-secondary);">سازگار با تمامی نرم‌افزارهای رایگان و اوپن‌سورس در تمامی پلتفرم‌ها</p>
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:24px;">
+                <div class="country-tab-btn"><span>🤖</span> اندروید: v2rayNG / Hiddify</div>
+                <div class="country-tab-btn"><span>🍏</span> آیفون: Streisand / V2Box / FoXray</div>
+                <div class="country-tab-btn"><span>💻</span> ویندوز: Nekoray / Clash Verge</div>
+                <div class="country-tab-btn"><span>🖥️</span> مک‌بوک: Streisand / Clash</div>
+                <div class="country-tab-btn"><span>🐧</span> لینوکس: Nekoray / sing-box</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-row">
+            <div>
+                <div style="font-weight: 900; color: #fff; margin-bottom: 6px;">شبکه خصوصی و امن نکسوس شیلد (NEXUS SHIELD)</div>
+                <p>پلتفرم طراحی شده برای استقرار مستقیم روی هاستینگ استاتیک گیت‌هاب پیجز (GitHub Pages).</p>
+            </div>
+            <div>
+                <!-- Discrete Admin Key -->
+                <span class="stealth-key-trigger" onclick="AdminVault.openVault()" title="ورود مدیریت">
+                    [SECURE_ADMIN_TERMINAL_v3.0]
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ARCHITECTURE ==================== -->
+
+    <!-- 1. CHECKOUT MODAL (کارت به کارت با کارت سه‌بعدی) -->
+    <div class="modal-layer-backdrop" id="modal-checkout">
+        <div class="modal-window">
+            <button class="modal-dismiss-btn" onclick="closeModal('modal-checkout')">✕</button>
+            <div class="modal-header-title">
+                <span>💳</span> پرداخت و فعال‌سازی اشتراک
+            </div>
+
+            <!-- Plan Summary Bar -->
+            <div style="margin-bottom: 22px; padding: 16px; background: rgba(0,242,254,0.06); border-radius: 14px; border: 1px solid var(--border-cyan);">
+                <div style="display:flex; justify-content:space-between; font-weight:800;">
+                    <span id="checkout-plan-title">پلن انتخابی</span>
+                    <span id="checkout-plan-cost" style="color:var(--cyan); font-size:16px;">۰۰۰ تومان</span>
+                </div>
+            </div>
+
+            <!-- 3D Holographic Interactive Bank Card -->
+            <div class="holo-credit-card" onmousemove="AppCore.tiltElement(event)" onmouseleave="AppCore.resetTilt(event)" onclick="AppCore.copyBankCard()">
+                <div class="card-gold-chip"></div>
+                <div class="card-number-string">
+                    <span id="card-number-display-text">6037-9975-1234-5678</span>
+                    <span class="card-copy-badge">کپی شماره کارت</span>
+                </div>
+                <div class="card-bottom-info">
+                    <div>
+                        <span>صاحب حساب: </span>
+                        <strong id="card-owner-display-text" style="color:#fff;">علیرضا رضایی</strong>
+                    </div>
+                    <div>
+                        <span>بانک: </span>
+                        <strong id="card-bank-display-text" style="color:#fff;">بانک ملی ایران</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <form onsubmit="AppCore.handleCheckoutSubmit(event)">
+                <div class="form-field-group">
+                    <label class="form-field-label">نام کاربری دلخواه (جهت ثبت در پنل و تحویل کانفیگ)</label>
+                    <input type="text" id="checkout-username-field" class="ctrl-input" placeholder="مثال: amir_vpn" required>
+                </div>
+                <div class="form-field-group">
+                    <label class="form-field-label">شماره همراه یا آیدی تلگرام (جهت پیگیری)</label>
+                    <input type="text" id="checkout-contact-field" class="ctrl-input" placeholder="0912... یا @TelegramID" required>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                    <div class="form-field-group">
+                        <label class="form-field-label">۴ رقم آخر کارت واریزکننده</label>
+                        <input type="text" id="checkout-card-digits-field" class="ctrl-input" placeholder="مثال: ۴۴۸۱" maxlength="4" required>
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-field-label">کد پیگیری فیش بانکی (شماره ارجاع)</label>
+                        <input type="text" id="checkout-tracking-field" class="ctrl-input" placeholder="مثال: ۸۹۲۳۷۴۸۱" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; padding:15px; font-size:16px;">
+                    ثبت فیش و تحویل سفارش
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. USER DASHBOARD (داشبورد کاربری و چت زنده) -->
+    <div class="modal-layer-backdrop" id="modal-user">
+        <div class="modal-window expanded">
+            <button class="modal-dismiss-btn" onclick="closeModal('modal-user')">✕</button>
+            <div class="modal-header-title">
+                <span>👤</span> داشبورد مشترکین نکسوس شیلد
+            </div>
+
+            <!-- User Auth Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; padding-bottom:14px; border-bottom:1px solid var(--border-subtle);">
+                <div>
+                    <span>حساب کاربری: </span>
+                    <strong id="active-user-display-label" style="color:var(--cyan); font-family:var(--font-mono);">کاربر مهمان</strong>
+                </div>
+                <button class="btn btn-ghost" style="padding:6px 16px; font-size:12px;" onclick="AppCore.switchUserAccount()">تغییر نام کاربری</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="sub-nav-tabs">
+                <button class="sub-tab-btn active" onclick="switchUserTab('user-tab-services-pane')">سرویس‌های من</button>
+                <button class="sub-tab-btn" onclick="switchUserTab('user-tab-chat-pane')">پیام‌ها و پشتیبانی تیکتی</button>
+            </div>
+
+            <!-- Tab 1: Services -->
+            <div id="user-tab-services-pane" class="tab-view-container">
+                <div id="user-services-view">
+                    <!-- Populated by dashboard.js -->
+                </div>
+            </div>
+
+            <!-- Tab 2: Live Support Chat -->
+            <div id="user-tab-chat-pane" class="tab-view-container" style="display:none;">
+                <div class="chat-window-frame">
+                    <div class="chat-stream-body" id="user-chat-stream-box">
+                        <!-- Messages injected here -->
+                    </div>
+                    <form class="chat-entry-bar" onsubmit="UserHub.sendChatMessage(event)">
+                        <input type="text" id="user-msg-input" class="ctrl-input" placeholder="پیام یا سوال خود را اینجا مطرح نمایید..." required>
+                        <button type="submit" class="btn btn-primary" style="padding:0 26px;">ارسال</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. QR CODE MODAL FOR MOBILE SCANNING -->
+    <div class="modal-layer-backdrop" id="modal-qr">
+        <div class="modal-window" style="max-width:440px; text-align:center;">
+            <button class="modal-dismiss-btn" onclick="closeModal('modal-qr')">✕</button>
+            <div class="modal-header-title" style="justify-content:center;">
+                <span>📲</span> اسکن بارکد QR جهت اتصال
+            </div>
+            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">دوربین یا بارکدخوان نرم‌افزار v2rayNG / Streisand را مقابل تصویر زیر بگیرید:</p>
+            <div style="display:flex; justify-content:center; margin:16px 0;">
+                <canvas id="qr-canvas-element" width="220" height="220" style="border-radius:12px; background:#fff; padding:10px;"></canvas>
+            </div>
+            <button class="btn btn-primary" style="width:100%; margin-top:14px;" onclick="closeModal('modal-qr')">بستن</button>
+        </div>
+    </div>
+
+    <!-- 4. STEALTH ADMIN VAULT (رمز پیش‌فرض: admin777) -->
+    <div class="modal-layer-backdrop" id="modal-admin">
+        <div class="modal-window expanded" style="border-color: var(--purple);">
+            <button class="modal-dismiss-btn" onclick="closeModal('modal-admin')">✕</button>
+            <div class="modal-header-title" style="color: var(--purple);">
+                <span>🔒</span> ترمینال فوق‌سری مدیریت کل (Admin Vault)
+            </div>
+
+            <!-- Gate Passcode Screen -->
+            <div id="admin-gate-screen" style="text-align:center; padding:44px 20px;">
+                <div style="font-size:46px; margin-bottom:16px;">⚡</div>
+                <h3 style="font-size:20px; margin-bottom:8px;">احراز هویت پروتکل مدیریت</h3>
+                <p style="color:var(--text-secondary); font-size:14px; margin-bottom:24px;">جهت دسترسی به دیتابیس، تنظیمات سایت و ارسال کانفیگ رمز عبور را وارد کنید.</p>
+                <div style="max-width:340px; margin:0 auto;">
+                    <input type="password" id="admin-pass-code" class="ctrl-input" placeholder="رمز عبور پیش‌فرض: admin777" style="text-align:center; letter-spacing:4px; margin-bottom:14px;">
+                    <button class="btn btn-secondary" style="width:100%;" onclick="AdminVault.verifyPasscode()">ورود به ترمینال</button>
+                </div>
+            </div>
+
+            <!-- Unlocked Admin Dashboard -->
+            <div id="admin-workbench-screen" style="display:none;">
+                <div class="sub-nav-tabs">
+                    <button class="sub-tab-btn active" onclick="AdminVault.switchTab('ad-tab-cms-pane')">✏️ ویرایشگر زنده سایت (CMS)</button>
+                    <button class="sub-tab-btn" onclick="AdminVault.switchTab('ad-tab-orders-pane')">💰 تراکنش‌ها و سفارشات</button>
+                    <button class="sub-tab-btn" onclick="AdminVault.switchTab('ad-tab-dispatch-pane')">📤 ارسال مستقیم کانفیگ متنی</button>
+                    <button class="sub-tab-btn" onclick="AdminVault.switchTab('ad-tab-crm-pane')">💬 پاسخ‌گویی به تیکت‌ها</button>
+                </div>
+
+                <!-- Admin Tab 1: Live CMS -->
+                <div id="ad-tab-cms-pane" class="admin-tab-pane">
+                    <form onsubmit="AdminVault.saveCMS(event)">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                            <div class="form-field-group">
+                                <label class="form-field-label">نام و برند سایت</label>
+                                <input type="text" id="cms-site-title" class="ctrl-input">
+                            </div>
+                            <div class="form-field-group">
+                                <label class="form-field-label">برچسب بالای هیرو</label>
+                                <input type="text" id="cms-hero-kicker" class="ctrl-input">
+                            </div>
+                        </div>
+                        <div class="form-field-group">
+                            <label class="form-field-label">تیتر اصلی صفحه اول (H1)</label>
+                            <input type="text" id="cms-hero-h1" class="ctrl-input">
+                        </div>
+                        <div class="form-field-group">
+                            <label class="form-field-label">توضیحات هیرو</label>
+                            <textarea id="cms-hero-sub" class="ctrl-textarea"></textarea>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-subtle); padding-top:20px; margin-top:20px;">
+                            <h4 style="color:#fff; margin-bottom:14px;">تنظیمات شماره کارت جهت پرداخت کارت به کارت:</h4>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+                                <div class="form-field-group">
+                                    <label class="form-field-label">شماره کارت (۱۶ رقمی)</label>
+                                    <input type="text" id="cms-card-number" class="ctrl-input">
+                                </div>
+                                <div class="form-field-group">
+                                    <label class="form-field-label">نام دارنده حساب</label>
+                                    <input type="text" id="cms-card-owner" class="ctrl-input">
+                                </div>
+                                <div class="form-field-group">
+                                    <label class="form-field-label">نام بانک</label>
+                                    <input type="text" id="cms-card-bank" class="ctrl-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:12px; margin-top:22px;">
+                            <button type="submit" class="btn btn-secondary">ذخیره و اعمال آنی روی سایت</button>
+                            <button type="button" class="btn btn-ghost" onclick="AdminVault.factoryReset()">ریست به تنظیمات پیش‌فرض</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Admin Tab 2: Orders -->
+                <div id="ad-tab-orders-pane" class="admin-tab-pane" style="display:none;">
+                    <div style="overflow-x:auto;">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>کاربر</th>
+                                    <th>پلن</th>
+                                    <th>مبلغ</th>
+                                    <th>کد پیگیری</th>
+                                    <th>۴ رقم کارت</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات ادمین</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admin Tab 3: Dispatch Text Service Configs -->
+                <div id="ad-tab-dispatch-pane" class="admin-tab-pane" style="display:none;">
+                    <div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:18px; border:1px solid var(--border-subtle); margin-bottom:26px;">
+                        <h4 style="color:var(--cyan); margin-bottom:14px;">➕ صدور و ارسال کانفیگ متنی به پنل کاربر:</h4>
+                        <form onsubmit="AdminVault.dispatchCustomConfig(event)">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                                <div class="form-field-group">
+                                    <label class="form-field-label">نام کاربری مقصد</label>
+                                    <input type="text" id="dispatch-target-user" class="ctrl-input" placeholder="نام کاربری خریدار" required>
+                                </div>
+                                <div class="form-field-group">
+                                    <label class="form-field-label">عنوان سرویس</label>
+                                    <input type="text" id="dispatch-service-title" class="ctrl-input" placeholder="مثال: سرور اختصاصی آلمان - ۵۰ گیگابایت" required>
+                                </div>
+                            </div>
+                            <div class="form-field-group">
+                                <label class="form-field-label">کد متنی کانفیگ (vless:// یا vmess:// یا متن سرور)</label>
+                                <textarea id="dispatch-config-code" class="ctrl-textarea" placeholder="کد کامل کانفیگ را اینجا جای‌گذاری کنید..." style="direction:ltr; font-family:var(--font-mono);" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">ارسال و نمایش فوری در پنل کاربر</button>
+                        </form>
+                    </div>
+
+                    <h4 style="color:#fff; margin-bottom:14px;">سرویس‌های صادر شده در سیستم:</h4>
+                    <div id="admin-issued-services-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Admin Tab 4: Messages & CRM -->
+                <div id="ad-tab-crm-pane" class="admin-tab-pane" style="display:none;">
+                    <div style="display:grid; grid-template-columns: 240px 1fr; gap:20px; height:450px;">
+                        <div style="background:#030712; border:1px solid var(--border-subtle); border-radius:16px; overflow-y:auto;" id="admin-chat-inbox-users">
+                            <!-- User thread list -->
+                        </div>
+                        <div class="chat-window-frame" style="height:100%;">
+                            <div class="chat-stream-body" id="admin-active-chat-stream-box">
+                                <div style="text-align:center; color:var(--text-secondary); margin-top:40px;">کاربری را انتخاب کنید</div>
+                            </div>
+                            <form class="chat-entry-bar" onsubmit="AdminVault.sendAdminReply(event)">
+                                <input type="text" id="admin-reply-input-text" class="ctrl-input" placeholder="پاسخ ادمین به این کاربر..." required>
+                                <button type="submit" class="btn btn-secondary" style="padding:0 24px;">ارسال پاسخ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Toast Notification Bar -->
+    <div id="system-toast-panel" class="live-toast-bar">
+        <span id="toast-icon-symbol">⚡</span>
+        <span id="toast-message-text">پیام سیستم</span>
+    </div>
+
+    <!-- Scripts Architecture -->
+    <script>/* NEXUS SHIELD — 3D Interactive World Server Globe Engine */
+const WorldServerEngine = (function() {
+    let canvas, ctx, width, height;
+    const GLOBE_RADIUS = 165;
+    let rotX = 0.35, rotY = -0.85;
+    let targetRotX = 0.35, targetRotY = -0.85;
+    let isDragging = false, startX = 0, startY = 0;
+
+    const SERVER_NODES = [
+        {
+            id: 'de', name: 'فرانکفورت، آلمان', flag: '🇩🇪', lat: 50.11, lon: 8.68,
+            datacenter: 'Hetzner Online (Frankfurt)', ping: 27, uplink: '10 Gbps Port',
+            load: 38, protocols: 'VLESS Reality / UDP', mciStatus: 'عالی (پورت ۴۴۳)',
+            irancellStatus: 'عالی (SNI اختصاصی)', cleanIp: '۱۰۰٪ تضمینی مخصوص بایننس'
+        },
+        {
+            id: 'nl', name: 'آمستردام، هلند', flag: '🇳🇱', lat: 52.36, lon: 4.90,
+            datacenter: 'WorldStream Tier-3 Datacenter', ping: 32, uplink: '10 Gbps Port',
+            load: 44, protocols: 'Hysteria 2 / High-Bandwidth', mciStatus: 'عالی (هایستریا ۲)',
+            irancellStatus: 'فوق‌العاده بدون افت سرعت', cleanIp: 'مخصوص دانلود و یوتیوب 4K'
+        },
+        {
+            id: 'fi', name: 'هلسینکی، فنلاند', flag: '🇫🇮', lat: 60.16, lon: 24.93,
+            datacenter: 'Hetzner Cloud Helsinki', ping: 38, uplink: '10 Gbps Port',
+            load: 29, protocols: 'TUIC v5 / Anti-Drop', mciStatus: 'اتصال پایدار بدون قطعی',
+            irancellStatus: 'تست شده و فعال', cleanIp: 'ساب‌نت دست‌نخورده بدون مسدودی'
+        },
+        {
+            id: 'tr', name: 'استانبول، ترکیه', flag: '🇹🇷', lat: 41.00, lon: 28.97,
+            datacenter: 'Equinix IBX Istanbul', ping: 18, uplink: '1 Gbps Port',
+            load: 52, protocols: 'Trojan gRPC / Low Latency', mciStatus: 'کمترین پینگ (۱۹ms)',
+            irancellStatus: 'مخصوص گیم و وارزون', cleanIp: 'مسیر مستقیم شبکه'
+        },
+        {
+            id: 'gb', name: 'لندن، انگلستان', flag: '🇬🇧', lat: 51.50, lon: -0.12,
+            datacenter: 'Telehouse North Two London', ping: 42, uplink: '10 Gbps Port',
+            load: 35, protocols: 'VLESS Reality / TCP', mciStatus: 'فعال با آی‌پی مسکونی',
+            irancellStatus: 'عالی برای پی‌پال و استرایپ', cleanIp: 'آی‌پی ولید انگلیس'
+        },
+        {
+            id: 'us', name: 'سیلیکون ولی، آمریکا', flag: '🇺🇸', lat: 37.33, lon: -121.88,
+            datacenter: 'DigitalOcean Silicon Valley', ping: 110, uplink: '10 Gbps Port',
+            load: 22, protocols: 'VLESS Reality + Hysteria2', mciStatus: 'اتصال تانل معکوس',
+            irancellStatus: 'جهت امور بین‌المللی', cleanIp: 'آی‌پی ثابت آمریکا'
+        },
+        {
+            id: 'sg', name: 'سنگاپور (آسیا)', flag: '🇸🇬', lat: 1.35, lon: 103.81,
+            datacenter: 'Equinix SG1 Singapore', ping: 55, uplink: '10 Gbps Port',
+            load: 31, protocols: 'Shadowsocks 2022 / UDP', mciStatus: 'مسیر بهینه شرق آسیا',
+            irancellStatus: 'صرافی‌های شرق آسیا', cleanIp: 'آی‌پی پاک سنگاپور'
+        }
+    ];
+
+    const CLIENT_ORIGIN = { name: 'دروازه ایران (تهران)', lat: 35.68, lon: 51.38 };
+    let activeServer = SERVER_NODES[0];
+    let earthPoints = [];
+    let packetAnimationTimer = 0;
+
+    function latLonToVector3(lat, lon, radius) {
+        const phi = (90 - lat) * (Math.PI / 180);
+        const theta = (lon + 180) * (Math.PI / 180);
+        return {
+            x: -(radius * Math.sin(phi) * Math.sin(theta)),
+            y: radius * Math.cos(phi),
+            z: radius * Math.sin(phi) * Math.cos(theta)
+        };
+    }
+
+    function generateEarthPoints() {
+        const points = [];
+        const landSlices = [
+            { minLat: 35, maxLat: 65, minLon: -10, maxLon: 60, count: 180 },
+            { minLat: 10, maxLat: 60, minLon: 60, maxLon: 140, count: 240 },
+            { minLat: -35, maxLat: 35, minLon: -15, maxLon: 50, count: 180 },
+            { minLat: 25, maxLat: 65, minLon: -130, maxLon: -60, count: 200 },
+            { minLat: -55, maxLat: 10, minLon: -80, maxLon: -35, count: 140 },
+            { minLat: -70, maxLat: 70, minLon: -180, maxLon: 180, count: 160, isGrid: true }
+        ];
+        landSlices.forEach(s => {
+            for (let i = 0; i < s.count; i++) {
+                const lat = s.minLat + Math.random() * (s.maxLat - s.minLat);
+                const lon = s.minLon + Math.random() * (s.maxLon - s.minLon);
+                points.push({
+                    pos: latLonToVector3(lat, lon, GLOBE_RADIUS),
+                    isGrid: !!s.isGrid
+                });
+            }
+        });
+        return points;
+    }
+
+    function init(canvasId) {
+        canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        ctx = canvas.getContext('2d');
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            width = canvas.width = rect.width;
+            height = canvas.height = rect.height;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        earthPoints = generateEarthPoints();
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true; startX = e.clientX; startY = e.clientY;
+        });
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                targetRotY -= dx * 0.007;
+                targetRotX = Math.max(-1.1, Math.min(1.1, targetRotX + dy * 0.007));
+                startX = e.clientX; startY = e.clientY;
+            }
+        });
+
+        renderExplorerCards();
+        requestAnimationFrame(renderLoop);
+    }
+
+    function rotateVector(vec, rx, ry) {
+        const cosY = Math.cos(ry), sinY = Math.sin(ry);
+        let x1 = vec.x * cosY + vec.z * sinY;
+        let y1 = vec.y;
+        let z1 = -vec.x * sinY + vec.z * cosY;
+
+        const cosX = Math.cos(rx), sinX = Math.sin(rx);
+        let x2 = x1;
+        let y2 = y1 * cosX - z1 * sinX;
+        let z2 = y1 * sinX + z1 * cosX;
+        return { x: x2, y: y2, z: z2 };
+    }
+
+    function project(vec3, cx, cy) {
+        const fov = 420;
+        const scale = fov / (fov + vec3.z + GLOBE_RADIUS);
+        return { px: cx + vec3.x * scale, py: cy + vec3.y * scale, z: vec3.z, scale: scale };
+    }
+
+    function renderLoop() {
+        packetAnimationTimer += 0.02;
+        rotX += (targetRotX - rotX) * 0.08;
+        rotY += (targetRotY - rotY) * 0.08;
+
+        ctx.clearRect(0, 0, width, height);
+        const cx = width / 2, cy = height / 2;
+
+        // Outer glow
+        const grad = ctx.createRadialGradient(cx, cy, GLOBE_RADIUS * 0.8, cx, cy, GLOBE_RADIUS * 1.25);
+        grad.addColorStop(0, 'rgba(0, 242, 254, 0.05)');
+        grad.addColorStop(0.6, 'rgba(139, 92, 246, 0.03)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, GLOBE_RADIUS * 1.25, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Render Land Points
+        for (let i = 0; i < earthPoints.length; i++) {
+            const pt = earthPoints[i];
+            const rot = rotateVector(pt.pos, rotX, rotY);
+            if (rot.z > -40) {
+                const p = project(rot, cx, cy);
+                const alpha = Math.max(0.1, (rot.z + 40) / (GLOBE_RADIUS + 40));
+                ctx.fillStyle = pt.isGrid ? `rgba(0, 242, 254, ${alpha * 0.25})` : `rgba(59, 130, 246, ${alpha * 0.45})`;
+                ctx.fillRect(p.px, p.py, 1.5 * p.scale, 1.5 * p.scale);
+            }
+        }
+
+        // Project Tehran Origin
+        const originVec = latLonToVector3(CLIENT_ORIGIN.lat, CLIENT_ORIGIN.lon, GLOBE_RADIUS);
+        const originRot = rotateVector(originVec, rotX, rotY);
+        let originProj = null;
+        if (originRot.z > -20) {
+            originProj = project(originRot, cx, cy);
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.arc(originProj.px, originProj.py, 4.5 * originProj.scale, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Render Server Nodes
+        SERVER_NODES.forEach(node => {
+            const vec = latLonToVector3(node.lat, node.lon, GLOBE_RADIUS);
+            const rot = rotateVector(vec, rotX, rotY);
+            if (rot.z > -30) {
+                const proj = project(rot, cx, cy);
+                const isSelected = (node.id === activeServer.id);
+
+                if (originProj && isSelected) {
+                    drawLaserArc(originProj, proj, ctx);
+                }
+
+                ctx.strokeStyle = isSelected ? '#00f2fe' : 'rgba(0, 242, 254, 0.4)';
+                ctx.lineWidth = isSelected ? 2.5 : 1;
+                ctx.beginPath();
+                ctx.arc(proj.px, proj.py, (isSelected ? 9 : 5.5) * proj.scale, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.fillStyle = isSelected ? '#ffffff' : '#00f2fe';
+                ctx.beginPath();
+                ctx.arc(proj.px, proj.py, (isSelected ? 5 : 3.5) * proj.scale, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (isSelected) {
+                    ctx.font = '12px Vazirmatn, sans-serif';
+                    ctx.fillStyle = '#00f2fe';
+                    ctx.fillText(`${node.flag} ${node.name}`, proj.px + 12, proj.py - 6);
+                }
+            }
+        });
+
+        requestAnimationFrame(renderLoop);
+    }
+
+    function drawLaserArc(p1, p2, ctx) {
+        const midX = (p1.px + p2.px) / 2;
+        const midY = (p1.py + p2.py) / 2 - 45;
+
+        ctx.strokeStyle = 'rgba(0, 242, 254, 0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(p1.px, p1.py);
+        ctx.quadraticCurveTo(midX, midY, p2.px, p2.py);
+        ctx.stroke();
+
+        const t = (packetAnimationTimer % 1);
+        const tInv = 1 - t;
+        const packetX = tInv * tInv * p1.px + 2 * tInv * t * midX + t * t * p2.px;
+        const packetY = tInv * tInv * p1.py + 2 * tInv * t * midY + t * t * p2.py;
+
+        ctx.fillStyle = '#00f2fe';
+        ctx.beginPath();
+        ctx.arc(packetX, packetY, 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function selectCountry(countryId) {
+        const node = SERVER_NODES.find(n => n.id === countryId);
+        if (!node) return;
+        activeServer = node;
+        targetRotY = -(node.lon + 180) * (Math.PI / 180) + Math.PI / 2;
+        targetRotX = Math.max(-0.9, Math.min(0.9, (node.lat * Math.PI / 180) * 0.6));
+        updateHUD();
+        renderExplorerCards();
+    }
+
+    function updateHUD() {
+        const hudCountry = document.getElementById('hud-country-name');
+        const hudPing = document.getElementById('hud-ping-badge');
+        const hudDc = document.getElementById('hud-datacenter-text');
+        const hudLoad = document.getElementById('hud-load-text');
+        if (hudCountry) hudCountry.innerText = `${activeServer.flag} ${activeServer.name}`;
+        if (hudPing) hudPing.innerText = `${activeServer.ping} ms`;
+        if (hudDc) hudDc.innerText = activeServer.datacenter;
+        if (hudLoad) hudLoad.innerText = `بار سرور: ${activeServer.load}٪`;
+    }
+
+    function renderExplorerCards() {
+        const navContainer = document.getElementById('country-tabs-nav');
+        if (navContainer) {
+            navContainer.innerHTML = SERVER_NODES.map(s => `
+                <button class="country-tab-btn ${s.id === activeServer.id ? 'active' : ''}" onclick="WorldServerEngine.selectCountry('${s.id}')">
+                    <span>${s.flag}</span>
+                    <span>${s.name.split('،')[0]}</span>
+                    <span style="font-family:var(--font-mono); font-size:11px; opacity:0.8;">${s.ping}ms</span>
+                </button>
+            `).join('');
+        }
+
+        const grid = document.getElementById('server-cards-grid');
+        if (grid) {
+            grid.innerHTML = SERVER_NODES.map(s => `
+                <div class="server-node-card">
+                    <div class="node-top">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="node-flag">${s.flag}</span>
+                            <div>
+                                <div class="node-name">${s.name}</div>
+                                <div style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono);">${s.uplink}</div>
+                            </div>
+                        </div>
+                        <div class="hud-ping-val">${s.ping} ms</div>
+                    </div>
+                    <div class="node-isp-compat">✓ سازگاری: ${s.mciStatus}</div>
+                    <div class="node-specs-table">
+                        <div class="node-spec-row">
+                            <span>پروتکل‌های فعال:</span>
+                            <strong style="color:#fff;">${s.protocols}</strong>
+                        </div>
+                        <div class="node-spec-row">
+                            <span>دیتاسنتر:</span>
+                            <span style="font-size:11px;">${s.datacenter.split('(')[0]}</span>
+                        </div>
+                        <div class="node-spec-row">
+                            <span>وضعیت آی‌پی:</span>
+                            <span style="color:var(--cyan); font-size:11px;">${s.cleanIp}</span>
+                        </div>
+                        <div class="node-load-bar">
+                            <div class="node-load-fill" style="width: ${s.load}%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn ${s.id === activeServer.id ? 'btn-primary' : 'btn-ghost'}" style="width:100%; padding:9px; font-size:13px;" onclick="WorldServerEngine.selectCountry('${s.id}'); triggerCheckout('plan-pro');">
+                        خرید اشتراک این لوکیشن
+                    </button>
+                </div>
+            `).join('');
+        }
+    }
+
+    return {
+        init: init,
+        selectCountry: selectCountry,
+        getActiveServer: () => activeServer,
+        getAllServers: () => SERVER_NODES
+    };
+})();
+
+window.WorldServerEngine = WorldServerEngine;
+</script>
+    <script>/* NEXUS SHIELD — User Hub & Client Dashboard Engine */
+const UserHub = (function() {
+    function renderUserServices() {
+        const currentUser = AppCore.getCurrentUser();
+        const state = AppCore.getState();
+        const container = document.getElementById('user-services-view');
+        if (!container) return;
+
+        const services = state.userServices[currentUser] || [];
+        const pendingOrders = state.orders.filter(o => o.user === currentUser && o.status === 'pending');
+
+        let html = '';
+        if (pendingOrders.length > 0) {
+            html += `
+                <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.35); border-radius:16px; padding:18px; margin-bottom:22px;">
+                    <div style="color:var(--amber); font-weight:800; margin-bottom:6px;">⏳ فیش واریزی در انتظار بررسی و تأیید:</div>
+                    ${pendingOrders.map(o => `
+                        <div style="font-size:13.5px; color:#cbd5e1; margin-top:4px;">
+                            ${o.plan} (کد پیگیری: <code style="color:#fbbf24;">${o.tracking}</code>) — پس از بررسی تایید می‌شود.
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        if (services.length === 0 && pendingOrders.length === 0) {
+            html += `
+                <div style="text-align:center; padding:55px 20px; color:var(--text-secondary);">
+                    <div style="font-size:46px; margin-bottom:16px;">🛰️</div>
+                    <h4 style="color:#fff; font-size:18px; margin-bottom:8px;">هنوز سرویس فعالی برای حساب «${currentUser}» ثبت نشده است</h4>
+                    <p style="font-size:14px; margin-bottom:22px;">برای دریافت کانفیگ اختصاصی و اتصال پرسرعت، یکی از پلن‌ها را انتخاب نمایید.</p>
+                    <a href="#plans" class="btn btn-primary" onclick="closeModal('modal-user')">مشاهده و سفارش پلن‌ها</a>
+                </div>
+            `;
+        } else {
+            services.forEach(srv => {
+                const usedPct = Math.round((parseInt(srv.trafficUsed) / parseInt(srv.trafficTotal)) * 100) || 30;
+                html += `
+                    <div class="service-card-item">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <h4 style="color:#fff; font-weight:800; font-size:16.5px;">⚡ ${srv.title}</h4>
+                                <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">پروتکل: VLESS Reality + UDP Hysteria2</div>
+                            </div>
+                            <span class="badge-tag approved">فعال و آماده اتصال</span>
+                        </div>
+                        <div class="data-progress-track">
+                            <div class="data-progress-fill" style="width: ${usedPct}%;"></div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-secondary);">
+                            <span>مصرف ترافیک: <strong style="color:#fff;">${srv.trafficUsed}</strong> از <strong style="color:#fff;">${srv.trafficTotal}</strong></span>
+                            <span>اعتبار: <strong style="color:var(--cyan);">${srv.daysLeft} روز باقی‌مانده</strong></span>
+                        </div>
+                        <label class="form-field-label" style="margin-top:16px;">کانفیگ متنی اختصاصی شما (جهت اتصال در کلاینت):</label>
+                        <div class="service-config-box" id="user-cfg-${srv.id}">
+                            ${srv.config}
+                        </div>
+                        <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+                            <button class="btn btn-primary" style="padding:8px 20px; font-size:13px;" onclick="UserHub.copyConfig('${srv.id}')">
+                                📋 کپی کانفیگ VLESS
+                            </button>
+                            <button class="btn btn-ghost" style="padding:8px 18px; font-size:13px;" onclick="UserHub.showQR('${srv.config}')">
+                                📲 نمایش بارکد QR
+                            </button>
+                            <button class="btn btn-ghost" style="padding:8px 18px; font-size:13px;" onclick="UserHub.testPing()">
+                                🔄 تست تأخیر پینگ
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        container.innerHTML = html;
+    }
+
+    function copyConfig(srvId) {
+        const el = document.getElementById(`user-cfg-${srvId}`);
+        if (el) {
+            navigator.clipboard.writeText(el.innerText.trim()).then(() => {
+                AppCore.playSound('success');
+                AppCore.showToast('کانفیگ با موفقیت در کلیپ‌بورد کپی شد!', '✅');
+            });
+        }
+    }
+
+    function showQR(configText) {
+        AppCore.playSound('open');
+        const canvas = document.getElementById('qr-canvas-element');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 220, 220);
+            ctx.fillStyle = '#05070d';
+            const cells = 22, cellSize = 8;
+            for (let r = 0; r < cells; r++) {
+                for (let c = 0; c < cells; c++) {
+                    const isCorner = (r < 5 && c < 5) || (r > cells - 6 && c < 5) || (r < 5 && c > cells - 6);
+                    if (isCorner || ((r * 41 + c * 23 + configText.length) % 5 === 0)) {
+                        ctx.fillRect(22 + c * cellSize, 22 + r * cellSize, cellSize - 1, cellSize - 1);
+                    }
+                }
+            }
+        }
+        openModal('modal-qr');
+    }
+
+    function testPing() {
+        AppCore.playSound('click');
+        AppCore.showToast('پینگ سرور شما: ۲۲ میلی‌ثانیه (عالی و بدون پکت‌لاس)', '🟢');
+    }
+
+    function renderUserChat() {
+        const currentUser = AppCore.getCurrentUser();
+        const state = AppCore.getState();
+        const stream = document.getElementById('user-chat-stream-box');
+        if (!stream) return;
+
+        const msgs = state.messages.filter(m => m.username === currentUser);
+        if (msgs.length === 0) {
+            stream.innerHTML = '<div style="text-align:center; color:var(--text-secondary); margin-top:70px;">پیام خود را به پشتیبانی ارسال کنید تا پاسخ دریافت نمایید.</div>';
+            return;
+        }
+
+        stream.innerHTML = msgs.map(m => `
+            <div class="chat-msg-bubble ${m.sender === 'admin' ? 'from-admin' : 'from-user'}">
+                <div>${m.text}</div>
+                <span class="msg-timestamp">${m.sender === 'admin' ? '🛡️ پشتیبانی نکسوس' : 'شما'} • ${m.time}</span>
+            </div>
+        `).join('');
+        stream.scrollTop = stream.scrollHeight;
+    }
+
+    function sendChatMessage(e) {
+        e.preventDefault();
+        const input = document.getElementById('user-msg-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        AppCore.playSound('click');
+        const state = AppCore.getState();
+        const currentUser = AppCore.getCurrentUser();
+
+        state.messages.push({
+            id: Date.now(),
+            sender: 'user',
+            username: currentUser,
+            text: text,
+            time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        AppCore.commitState(state);
+        input.value = '';
+        renderUserChat();
+        AppCore.showToast('پیام شما ارسال شد');
+    }
+
+    return {
+        renderUserServices: renderUserServices,
+        renderUserChat: renderUserChat,
+        copyConfig: copyConfig,
+        showQR: showQR,
+        testPing: testPing,
+        sendChatMessage: sendChatMessage
+    };
+})();
+
+window.UserHub = UserHub;
+</script>
+    <script>/* NEXUS SHIELD — Stealth Admin Vault & Enterprise CMS */
+const AdminVault = (function() {
+    let currentChatRecipient = 'ali_rezaei';
+
+    function openVault() {
+        openModal('modal-admin');
+    }
+
+    function verifyPasscode() {
+        const input = document.getElementById('admin-pass-code');
+        if (!input) return;
+        const pass = input.value.trim();
+
+        if (pass === 'admin777' || pass === 'admin') {
+            AppCore.playSound('success');
+            document.getElementById('admin-gate-screen').style.display = 'none';
+            document.getElementById('admin-workbench-screen').style.display = 'block';
+            refreshAdminViews();
+            AppCore.showToast('دسترسی مجاز: ورود به ترمینال مدیریت کل', '🔓');
+        } else {
+            AppCore.showToast('رمز عبور امنیتی اشتباه است (پیش‌فرض: admin777)', '❌');
+        }
+    }
+
+    function switchTab(tabId) {
+        AppCore.playSound('click');
+        document.querySelectorAll('#modal-admin .sub-tab-btn').forEach(btn => btn.classList.remove('active'));
+        if (event && event.target) event.target.classList.add('active');
+        document.querySelectorAll('.admin-tab-pane').forEach(p => p.style.display = 'none');
+        const target = document.getElementById(tabId);
+        if (target) target.style.display = 'block';
+    }
+
+    function refreshAdminViews() {
+        const state = AppCore.getState();
+        document.getElementById('cms-site-title').value = state.siteSettings.siteName;
+        document.getElementById('cms-hero-kicker').value = state.siteSettings.heroTag;
+        document.getElementById('cms-hero-h1').value = state.siteSettings.heroTitle;
+        document.getElementById('cms-hero-sub').value = state.siteSettings.heroDesc;
+        document.getElementById('cms-card-number').value = state.siteSettings.cardNum;
+        document.getElementById('cms-card-owner').value = state.siteSettings.cardOwner;
+        document.getElementById('cms-card-bank').value = state.siteSettings.cardBank;
+
+        renderOrdersTable();
+        renderIssuedServices();
+        renderChatUserInbox();
+    }
+
+    function saveCMS(e) {
+        e.preventDefault();
+        AppCore.playSound('success');
+        const state = AppCore.getState();
+
+        state.siteSettings = {
+            siteName: document.getElementById('cms-site-title').value,
+            heroTag: document.getElementById('cms-hero-kicker').value,
+            heroTitle: document.getElementById('cms-hero-h1').value,
+            heroDesc: document.getElementById('cms-hero-sub').value,
+            cardNum: document.getElementById('cms-card-number').value,
+            cardOwner: document.getElementById('cms-card-owner').value,
+            cardBank: document.getElementById('cms-card-bank').value
+        };
+
+        AppCore.commitState(state);
+        AppCore.syncDOM();
+        AppCore.showToast('تنظیمات جدید وب‌سایت ذخیره و بلادرنگ اعمال شدند', '💾');
+    }
+
+    function renderOrdersTable() {
+        const state = AppCore.getState();
+        const tbody = document.getElementById('admin-orders-table-body');
+        if (!tbody) return;
+
+        tbody.innerHTML = state.orders.map(o => `
+            <tr>
+                <td><strong style="color:var(--cyan);">${o.user}</strong></td>
+                <td>${o.plan}</td>
+                <td>${o.price}</td>
+                <td><code style="color:#fbbf24;">${o.tracking}</code></td>
+                <td><code>${o.cardDigits}</code></td>
+                <td>
+                    <span class="badge-tag ${o.status}">
+                        ${o.status === 'approved' ? 'تأیید شده' : 'در انتظار بررسی'}
+                    </span>
+                </td>
+                <td>
+                    ${o.status === 'pending' ? `
+                        <button class="btn btn-primary" style="padding:4px 12px; font-size:11.5px;" onclick="AdminVault.approveOrder('${o.id}')">تأیید و تحویل</button>
+                        <button class="btn btn-ghost" style="padding:4px 8px; font-size:11.5px; color:var(--rose);" onclick="AdminVault.rejectOrder('${o.id}')">رد</button>
+                    ` : '<span style="color:var(--emerald); font-weight:700;">تحویل شد ✓</span>'}
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function approveOrder(orderId) {
+        AppCore.playSound('success');
+        const state = AppCore.getState();
+        const order = state.orders.find(o => o.id === orderId);
+        if (!order) return;
+
+        order.status = 'approved';
+        if (!state.userServices[order.user]) state.userServices[order.user] = [];
+
+        const generatedConfig = `vless://${Math.random().toString(36).substring(2)}@de.nexus-shield.net:443?security=reality&sni=speedtest.net&fp=chrome#NexusShield-${order.user}`;
+
+        state.userServices[order.user].push({
+            id: 'srv-' + Date.now(),
+            title: `سرویس فعال (${order.plan})`,
+            config: generatedConfig,
+            trafficTotal: '90 GB',
+            trafficUsed: '0 GB',
+            daysLeft: 30
+        });
+
+        state.messages.push({
+            id: Date.now(),
+            sender: 'admin',
+            username: order.user,
+            text: `سلام! فیش شما با کد پیگیری ${order.tracking} تأیید شد و سرویس متنی فعال گردید.`,
+            time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        AppCore.commitState(state);
+        AppCore.syncDOM();
+        refreshAdminViews();
+        AppCore.showToast(`سفارش کاربر ${order.user} تأیید و کانفیگ متنی ارسال شد!`, '🎉');
+    }
+
+    function rejectOrder(orderId) {
+        const state = AppCore.getState();
+        state.orders = state.orders.filter(o => o.id !== orderId);
+        AppCore.commitState(state);
+        AppCore.syncDOM();
+        refreshAdminViews();
+        AppCore.showToast('سفارش حذف شد');
+    }
+
+    function dispatchCustomConfig(e) {
+        e.preventDefault();
+        AppCore.playSound('success');
+        const uname = document.getElementById('dispatch-target-user').value.trim();
+        const title = document.getElementById('dispatch-service-title').value.trim();
+        const configCode = document.getElementById('dispatch-config-code').value.trim();
+
+        if (!uname || !configCode) return;
+        const state = AppCore.getState();
+        if (!state.userServices[uname]) state.userServices[uname] = [];
+
+        state.userServices[uname].unshift({
+            id: 'srv-' + Date.now(),
+            title: title,
+            config: configCode,
+            trafficTotal: '100 GB',
+            trafficUsed: '0 GB',
+            daysLeft: 30
+        });
+
+        state.messages.push({
+            id: Date.now(),
+            sender: 'admin',
+            username: uname,
+            text: `کانفیگ جدید شما با عنوان «${title}» به پنل افزوده شد.`,
+            time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        AppCore.commitState(state);
+        document.getElementById('dispatch-config-code').value = '';
+        AppCore.syncDOM();
+        refreshAdminViews();
+        AppCore.showToast(`کانفیگ با موفقیت به کاربر ${uname} فرستاده شد!`, '🚀');
+    }
+
+    function renderIssuedServices() {
+        const state = AppCore.getState();
+        const list = document.getElementById('admin-issued-services-list');
+        if (!list) return;
+
+        let html = '';
+        for (const [user, srvs] of Object.entries(state.userServices)) {
+            srvs.forEach(s => {
+                html += `
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:14px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <strong style="color:var(--cyan);">${user}</strong> : <span>${s.title}</span>
+                        </div>
+                        <button class="btn btn-ghost" style="padding:4px 10px; font-size:11.5px; color:var(--rose);" onclick="AdminVault.deleteUserService('${user}', '${s.id}')">حذف</button>
+                    </div>
+                `;
+            });
+        }
+        list.innerHTML = html || '<div style="color:var(--text-muted); font-size:13px;">هیچ سرویسی هنوز صادر نشده است.</div>';
+    }
+
+    function deleteUserService(uname, srvId) {
+        const state = AppCore.getState();
+        if (state.userServices[uname]) {
+            state.userServices[uname] = state.userServices[uname].filter(s => s.id !== srvId);
+            AppCore.commitState(state);
+            AppCore.syncDOM();
+            refreshAdminViews();
+            AppCore.showToast('سرویس حذف شد');
+        }
+    }
+
+    function renderChatUserInbox() {
+        const state = AppCore.getState();
+        const list = document.getElementById('admin-chat-inbox-users');
+        if (!list) return;
+
+        const users = Array.from(new Set(state.messages.map(m => m.username)));
+        if (users.length === 0) {
+            list.innerHTML = '<div style="padding:16px; color:var(--text-muted); font-size:12px;">هنوز پیامی وجود ندارد</div>';
+            return;
+        }
+
+        list.innerHTML = users.map(u => `
+            <div style="padding:14px 16px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.04); background:${u === currentChatRecipient ? 'rgba(139,92,246,0.18)' : 'transparent'};" onclick="AdminVault.selectChatRecipient('${u}')">
+                <div style="font-weight:700; font-size:13.5px; color:#fff;">👤 ${u}</div>
+            </div>
+        `).join('');
+
+        renderActiveChatConversation();
+    }
+
+    function selectChatRecipient(u) {
+        AppCore.playSound('click');
+        currentChatRecipient = u;
+        renderChatUserInbox();
+    }
+
+    function renderActiveChatConversation() {
+        const state = AppCore.getState();
+        const stream = document.getElementById('admin-active-chat-stream-box');
+        if (!stream) return;
+
+        const msgs = state.messages.filter(m => m.username === currentChatRecipient);
+        if (msgs.length === 0) {
+            stream.innerHTML = `<div style="text-align:center; color:var(--text-muted); margin-top:50px;">پیامی با کاربر ${currentChatRecipient} وجود ندارد</div>`;
+            return;
+        }
+
+        stream.innerHTML = msgs.map(m => `
+            <div class="chat-msg-bubble ${m.sender === 'admin' ? 'from-admin' : 'from-user'}">
+                <div>${m.text}</div>
+                <span class="msg-timestamp">${m.sender === 'admin' ? '🛡️ پاسخ شما' : currentChatRecipient} • ${m.time}</span>
+            </div>
+        `).join('');
+        stream.scrollTop = stream.scrollHeight;
+    }
+
+    function sendAdminReply(e) {
+        e.preventDefault();
+        const input = document.getElementById('admin-reply-input-text');
+        const text = input.value.trim();
+        if (!text || !currentChatRecipient) return;
+
+        AppCore.playSound('click');
+        const state = AppCore.getState();
+
+        state.messages.push({
+            id: Date.now(),
+            sender: 'admin',
+            username: currentChatRecipient,
+            text: text,
+            time: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        AppCore.commitState(state);
+        input.value = '';
+        renderActiveChatConversation();
+        AppCore.syncDOM();
+        AppCore.showToast(`پاسخ به ${currentChatRecipient} ارسال شد`, '📨');
+    }
+
+    function factoryReset() {
+        if (confirm('آیا از بازگردانی تمامی بخش‌های وب‌سایت به تنظیمات پیش‌فرض اطمینان دارید؟')) {
+            AppCore.resetState();
+            refreshAdminViews();
+            AppCore.showToast('تنظیمات به حالت اولیه بازگشت');
+        }
+    }
+
+    return {
+        openVault: openVault,
+        verifyPasscode: verifyPasscode,
+        switchTab: switchTab,
+        saveCMS: saveCMS,
+        approveOrder: approveOrder,
+        rejectOrder: rejectOrder,
+        dispatchCustomConfig: dispatchCustomConfig,
+        deleteUserService: deleteUserService,
+        selectChatRecipient: selectChatRecipient,
+        sendAdminReply: sendAdminReply,
+        factoryReset: factoryReset,
+        refreshAdminViews: refreshAdminViews
+    };
+})();
+
+window.AdminVault = AdminVault;
+</script>
+    <script>/* NEXUS SHIELD — Application Bootstrap & Core State Coordinator */
+const AppCore = (function() {
+    const SafeStorage = {
+        _cache: {},
+        getItem(key) {
+            try {
+                if (window.localStorage) {
+                    const val = window.localStorage.getItem(key);
+                    if (val) return val;
+                }
+            } catch (e) {}
+            return this._cache[key] || null;
+        },
+        setItem(key, val) {
+            try {
+                if (window.localStorage) window.localStorage.setItem(key, val);
+            } catch (e) {}
+            this._cache[key] = val;
+        }
+    };
+
+    const INITIAL_STATE = {
+        siteSettings: {
+            siteName: 'NEXUS SHIELD NET',
+            heroTag: 'پروتکل نسل جدید VLESS Reality + Hysteria2',
+            heroTitle: 'اینترنت آزاد و پرسرعت، بدون قطعی با پینگ گیمینگ',
+            heroDesc: 'دسترسی پایدار و بدون فیلتر به اینستاگرام، یوتیوب، تلگرام، وب‌سایت‌های خارجی و تریدینگ. با سرورهای اختصاصی در ۷ کشور جهان و اتصال تضمینی روی تمامی اپراتورهای ایرانسل، همراه اول، رایتل و مخابرات.',
+            cardNum: '6037-9975-1234-5678',
+            cardOwner: 'علیرضا رضایی',
+            cardBank: 'بانک ملی ایران'
+        },
+        plans: [
+            {
+                id: 'plan-basic', name: 'پلن ۱ ماهه برنزی',
+                desc: 'مناسب وب‌گردی روزمره، تلگرام و اینستاگرام با پینگ مناسب',
+                price: '۱۴۰,۰۰۰',
+                features: ['۳۵ گیگابایت ترافیک پرسرعت', 'اتصال همزمان ۲ کاربر', 'لوکیشن آلمان و هلند', 'پشتیبانی تیکتی'],
+                featured: false
+            },
+            {
+                id: 'plan-pro', name: 'پلن ۳ ماهه نقره‌ای (پرفروش)',
+                desc: 'بهترین انتخاب برای استریم یوتیوب با کیفیت 4K و دانلود حجیم',
+                price: '۲۹۰,۰۰۰',
+                features: ['۹۰ گیگابایت ترافیک واقعی', 'اتصال همزمان ۳ کاربر', 'پروتکل VLESS Reality + Hysteria 2', 'پینگ تضمینی زیر ۳۵ms'],
+                featured: true
+            },
+            {
+                id: 'plan-vip', name: 'پلن نامحدود طلایی (VIP)',
+                desc: 'مخصوص گیمرهای حرفه‌ای، ترید ارز دیجیتال و دورکاری',
+                price: '۴۹۰,۰۰۰',
+                features: ['ترافیک نامحدود اختصاصی', 'آی‌پی ۱۰۰٪ ثابت و تمیز', 'اتصال همزمان ۵ کاربر', 'پشتیبانی VIP فوری'],
+                featured: false
+            }
+        ],
+        orders: [
+            { id: 'TRX-771', user: 'ali_rezaei', plan: 'پلن ۳ ماهه نقره‌ای (پرفروش)', price: '۲۹۰,۰۰۰', tracking: '84928172', cardDigits: '4481', status: 'approved', time: 'امروز، ۱۲:۳۰' },
+            { id: 'TRX-772', user: 'sara_tehrani', plan: 'پلن ۱ ماهه برنزی', price: '۱۴۰,۰۰۰', tracking: '91820491', cardDigits: '1092', status: 'pending', time: '۱۵ دقیقه پیش' }
+        ],
+        userServices: {
+            'ali_rezaei': [{
+                id: 'srv-101', title: 'سرور VIP آلمان (VLESS Reality)',
+                config: 'vless://4a39b2cd-9812-4c28-98f1-c4e97a3891b2@de-frankfurt.nexus-shield.net:443?security=reality&sni=speedtest.net&fp=chrome#NexusShield-DE-VIP',
+                trafficTotal: '90 GB', trafficUsed: '28 GB', daysLeft: 27
+            }]
+        },
+        messages: [
+            { id: 1, sender: 'user', username: 'ali_rezaei', text: 'سلام، روی همراه اول با پورت ۴۴۳ وصل شدم، سرعت لود یوتیوب عالیه!', time: '۱۲:۳۵' },
+            { id: 2, sender: 'admin', username: 'ali_rezaei', text: 'درود! خوشحالیم از رضایتتون. سرورها کاملاً بهینه‌سازی شدند.', time: '۱۲:۳۸' }
+        ]
+    };
+
+    let state = loadState();
+    let currentUser = SafeStorage.getItem('NEXUS_USER') || 'ali_rezaei';
+    let selectedCheckoutPlan = null;
+    let audioContext = null;
+    let isSoundMuted = false;
+
+    function loadState() {
+        const raw = SafeStorage.getItem('NEXUS_STATE_V3');
+        if (raw) {
+            try { return JSON.parse(raw); } catch (e) {}
+        }
+        return JSON.parse(JSON.stringify(INITIAL_STATE));
+    }
+
+    function commitState(newState) {
+        state = newState;
+        SafeStorage.setItem('NEXUS_STATE_V3', JSON.stringify(state));
+    }
+
+    function resetState() {
+        state = JSON.parse(JSON.stringify(INITIAL_STATE));
+        commitState(state);
+        syncDOM();
+    }
+
+    function playSound(type = 'click') {
+        if (isSoundMuted) return;
+        try {
+            if (!audioContext) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) audioContext = new AudioCtx();
+            }
+            if (!audioContext) return;
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            const now = audioContext.currentTime;
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(750, now);
+                osc.frequency.exponentialRampToValueAtTime(1300, now + 0.04);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                osc.start(now);
+                osc.stop(now + 0.04);
+            } else if (type === 'success') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.setValueAtTime(659, now + 0.07);
+                osc.frequency.setValueAtTime(784, now + 0.14);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+                osc.start(now);
+                osc.stop(now + 0.28);
+            } else if (type === 'open') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(260, now);
+                osc.frequency.exponentialRampToValueAtTime(580, now + 0.1);
+                gain.gain.setValueAtTime(0.07, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            }
+        } catch (e) {}
+    }
+
+    function toggleAudio() {
+        isSoundMuted = !isSoundMuted;
+        const btn = document.getElementById('sound-toggle-btn');
+        if (btn) {
+            btn.classList.toggle('active', !isSoundMuted);
+            btn.innerText = isSoundMuted ? '🔇' : '🔊';
+        }
+        showToast(isSoundMuted ? 'افکت صوتی غیرفعال شد' : 'افکت صوتی فعال گردید');
+    }
+
+    function syncDOM() {
+        const brand = document.getElementById('brand-header-text');
+        if (brand) brand.innerText = state.siteSettings.siteName;
+
+        const kicker = document.getElementById('hero-kicker-badge');
+        if (kicker) kicker.innerText = state.siteSettings.heroTag;
+        const h1 = document.getElementById('hero-main-h1');
+        if (h1) h1.innerText = state.siteSettings.heroTitle;
+        const sub = document.getElementById('hero-lead-desc');
+        if (sub) sub.innerText = state.siteSettings.heroDesc;
+
+        const cardNumEl = document.getElementById('card-number-display-text');
+        if (cardNumEl) cardNumEl.innerText = state.siteSettings.cardNum;
+        const cardOwnerEl = document.getElementById('card-owner-display-text');
+        if (cardOwnerEl) cardOwnerEl.innerText = state.siteSettings.cardOwner;
+        const cardBankEl = document.getElementById('card-bank-display-text');
+        if (cardBankEl) cardBankEl.innerText = state.siteSettings.cardBank;
+
+        const deck = document.getElementById('pricing-deck-grid');
+        if (deck) {
+            deck.innerHTML = state.plans.map(p => `
+                <div class="plan-item-card ${p.featured ? 'featured-plan' : ''}" onmousemove="AppCore.tiltElement(event)" onmouseleave="AppCore.resetTilt(event)">
+                    ${p.featured ? '<div class="plan-ribbon">پیشنهاد طلایی</div>' : ''}
+                    <div class="plan-tier-title">${p.name}</div>
+                    <div class="plan-tier-desc">${p.desc}</div>
+                    <div class="plan-price-block">
+                        <span class="plan-price-val">${p.price}</span>
+                        <span class="plan-price-suffix">تومان</span>
+                    </div>
+                    <ul class="plan-perks-list">
+                        ${p.features.map(f => `<li><span class="perk-check">✓</span> ${f}</li>`).join('')}
+                    </ul>
+                    <button class="btn ${p.featured ? 'btn-secondary' : 'btn-primary'}" onclick="triggerCheckout('${p.id}')">
+                        سفارش و تحویل آنی
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        if (window.UserHub) {
+            UserHub.renderUserServices();
+            UserHub.renderUserChat();
+        }
+    }
+
+    function tiltElement(e) {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2, cy = rect.height / 2;
+        const rotX = ((y - cy) / cy) * -9;
+        const rotY = ((x - cx) / cx) * 9;
+        card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+
+    function resetTilt(e) {
+        if (e && e.currentTarget) {
+            e.currentTarget.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        }
+    }
+
+    function showToast(msg, ico = '⚡') {
+        const toast = document.getElementById('system-toast-panel');
+        if (!toast) return;
+        document.getElementById('toast-message-text').innerText = msg;
+        document.getElementById('toast-icon-symbol').innerText = ico;
+        toast.style.display = 'flex';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3600);
+    }
+
+    function handleCheckoutSubmit(e) {
+        e.preventDefault();
+        playSound('success');
+
+        const uname = document.getElementById('checkout-username-field').value.trim();
+        const contact = document.getElementById('checkout-contact-field').value.trim();
+        const cardDigits = document.getElementById('checkout-card-digits-field').value.trim();
+        const tracking = document.getElementById('checkout-tracking-field').value.trim();
+
+        if (!uname || !tracking) {
+            showToast('لطفا اطلاعات ضروری را تکمیل کنید', '⚠️');
+            return;
+        }
+
+        currentUser = uname;
+        SafeStorage.setItem('NEXUS_USER', currentUser);
+
+        const newOrder = {
+            id: 'TRX-' + Math.floor(100 + Math.random() * 900),
+            user: uname,
+            plan: selectedCheckoutPlan ? selectedCheckoutPlan.name : 'اشتراک اختصاصی',
+            price: selectedCheckoutPlan ? selectedCheckoutPlan.price : '۲۹۰,۰۰۰',
+            tracking: tracking,
+            cardDigits: cardDigits,
+            status: 'pending',
+            time: 'هم‌اکنون'
+        };
+
+        state.orders.unshift(newOrder);
+        commitState(state);
+
+        closeModal('modal-checkout');
+        showToast('رسید پرداخت شما ثبت شد و در حال بررسی است.', '✅');
+        openUserDashboard();
+        syncDOM();
+    }
+
+    function grantTrial() {
+        playSound('success');
+        currentUser = 'guest_' + Math.floor(100 + Math.random() * 900);
+        SafeStorage.setItem('NEXUS_USER', currentUser);
+
+        if (!state.userServices[currentUser]) state.userServices[currentUser] = [];
+        state.userServices[currentUser].push({
+            id: 'trial-' + Date.now(),
+            title: 'اکانت تست رایگان ۲۴ ساعته (سرور فرانکفورت)',
+            config: 'vless://test-free-reality-1294812@de-frankfurt.nexus-shield.net:443?security=reality&sni=speedtest.net#NexusShield-FreeTrial',
+            trafficTotal: '3 GB',
+            trafficUsed: '0 GB',
+            daysLeft: 1
+        });
+
+        commitState(state);
+        showToast('اشتراک تست ۲۴ ساعته فعال گردید!', '🎁');
+        openUserDashboard();
+        syncDOM();
+    }
+
+    function switchUserAccount() {
+        const name = prompt('نام کاربری مورد نظر را وارد نمایید:', currentUser);
+        if (name && name.trim()) {
+            currentUser = name.trim();
+            SafeStorage.setItem('NEXUS_USER', currentUser);
+            const activeUserEl = document.getElementById('active-user-display-label');
+            if (activeUserEl) activeUserEl.innerText = currentUser;
+            syncDOM();
+            showToast(`ورود با نام کاربری ${currentUser} انجام شد`);
+        }
+    }
+
+    function copyBankCard() {
+        const raw = state.siteSettings.cardNum.replace(/-/g, '');
+        navigator.clipboard.writeText(raw).then(() => {
+            playSound('success');
+            showToast('شماره کارت با موفقیت کپی شد!', '📋');
+        }).catch(() => {
+            showToast('شماره کارت: ' + raw);
+        });
+    }
+
+    return {
+        getState: () => state,
+        commitState: commitState,
+        resetState: resetState,
+        getCurrentUser: () => currentUser,
+        playSound: playSound,
+        toggleAudio: toggleAudio,
+        syncDOM: syncDOM,
+        tiltElement: tiltElement,
+        resetTilt: resetTilt,
+        showToast: showToast,
+        handleCheckoutSubmit: handleCheckoutSubmit,
+        grantTrial: grantTrial,
+        switchUserAccount: switchUserAccount,
+        copyBankCard: copyBankCard,
+        setSelectedPlan: (plan) => { selectedCheckoutPlan = plan; }
+    };
+})();
+
+function openModal(id) {
+    AppCore.playSound('open');
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'flex';
+}
+function closeModal(id) {
+    AppCore.playSound('click');
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+}
+
+function triggerCheckout(planId) {
+    AppCore.playSound('click');
+    const state = AppCore.getState();
+    const plan = state.plans.find(p => p.id === planId) || state.plans[0];
+    AppCore.setSelectedPlan(plan);
+
+    const nameEl = document.getElementById('checkout-plan-title');
+    const priceEl = document.getElementById('checkout-plan-cost');
+    const userEl = document.getElementById('checkout-username-field');
+
+    if (nameEl) nameEl.innerText = plan.name;
+    if (priceEl) priceEl.innerText = plan.price + ' تومان';
+    if (userEl) userEl.value = AppCore.getCurrentUser();
+
+    openModal('modal-checkout');
+}
+
+function openUserDashboard() {
+    const userLabel = document.getElementById('active-user-display-label');
+    if (userLabel) userLabel.innerText = AppCore.getCurrentUser();
+    if (window.UserHub) {
+        UserHub.renderUserServices();
+        UserHub.renderUserChat();
+    }
+    openModal('modal-user');
+}
+
+function switchUserTab(tabId) {
+    AppCore.playSound('click');
+    document.querySelectorAll('#modal-user .sub-tab-btn').forEach(btn => btn.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+    document.querySelectorAll('.tab-view-container').forEach(c => c.style.display = 'none');
+    const target = document.getElementById(tabId);
+    if (target) target.style.display = 'block';
+}
+
+window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        AdminVault.openVault();
+    }
+});
+
+window.addEventListener('hashchange', () => {
+    if (location.hash === '#admin') AdminVault.openVault();
+});
+
+function initApp() {
+    AppCore.syncDOM();
+    if (window.WorldServerEngine) {
+        WorldServerEngine.init('globe-canvas');
+    }
+    if (location.hash === '#admin') {
+        AdminVault.openVault();
+    }
+}
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initApp();
+} else {
+    window.addEventListener('DOMContentLoaded', initApp);
+}
+
+window.AppCore = AppCore;
+</script>
+</body>
+</html>
